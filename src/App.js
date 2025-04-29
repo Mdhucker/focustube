@@ -1,18 +1,15 @@
-import React from 'react';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import About from './pages/About';
 
 function App() {
-  
   return (
-    <Router >
+    <BrowserRouter basename="/focustube">
       <Routes>
         <Route path="/" element={<Home />} />
-       
-        {/* Add more routes here as needed */}
+        {/* <Route path="/about" element={<About />} /> */}
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
