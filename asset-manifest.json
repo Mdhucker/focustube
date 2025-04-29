@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/focustube/static/css/main.acafa000.css",
+    "main.css": "/focustube/static/css/main.14b2f279.css",
     "main.js": "/focustube/static/js/main.ebc9cee7.js",
     "index.html": "/focustube/index.html",
-    "main.acafa000.css.map": "/focustube/static/css/main.acafa000.css.map",
+    "main.14b2f279.css.map": "/focustube/static/css/main.14b2f279.css.map",
     "main.ebc9cee7.js.map": "/focustube/static/js/main.ebc9cee7.js.map"
   },
   "entrypoints": [
-    "static/css/main.acafa000.css",
+    "static/css/main.14b2f279.css",
     "static/js/main.ebc9cee7.js"
   ]
 }
