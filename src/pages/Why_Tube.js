@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 
-function Home() {
+function Why_Tube() {
   const [darkMode, setDarkMode] = useState(false);
 
   // Set the body background color when the theme changes
@@ -400,4 +400,4 @@ src="https://www.youtube.com/embed/0O4zLy5nECQ?si=klTJoh4ecYTmBztR"             
   );
 }
 
-export default Home;
+export default Why_Tube;

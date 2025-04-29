@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 
-function Home() {
+function Health() {
   const [darkMode, setDarkMode] = useState(false);
 
   // Set the body background color when the theme changes
@@ -29,12 +29,12 @@ function Home() {
       {/* <div class="container mx-auto px-4 sm:px-6 lg:px-8"> */}
 
       {/* Hero Section */}
-      <div className={`container mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden text-white min-h-screen ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
+      <div className={`container mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden  text-white min-h-screen ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
         <div className="flex flex-1 flex-col items-center p-6">
 
 
             <Link to="/focus" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-2`}>
-              Why FocusTube ?
+                Being Healthy Now
             </Link>
             <hr className="border-t-1 border-[#FF0000] w-screen mx-0 bottom-1 mb-4" />
 
@@ -400,4 +400,4 @@ src="https://www.youtube.com/embed/0O4zLy5nECQ?si=klTJoh4ecYTmBztR"             
   );
 }
 
-export default Home;
+export default Health;
