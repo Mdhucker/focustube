@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/focustube/static/css/main.1b101d88.css",
-    "main.js": "/focustube/static/js/main.a36e0a1c.js",
+    "main.css": "/focustube/static/css/main.fd9cddc8.css",
+    "main.js": "/focustube/static/js/main.88fd61c6.js",
     "static/media/logob.avif": "/focustube/static/media/logob.40f7eb68116c6b99af64.avif",
     "index.html": "/focustube/index.html",
-    "main.1b101d88.css.map": "/focustube/static/css/main.1b101d88.css.map",
-    "main.a36e0a1c.js.map": "/focustube/static/js/main.a36e0a1c.js.map"
+    "main.fd9cddc8.css.map": "/focustube/static/css/main.fd9cddc8.css.map",
+    "main.88fd61c6.js.map": "/focustube/static/js/main.88fd61c6.js.map"
   },
   "entrypoints": [
-    "static/css/main.1b101d88.css",
-    "static/js/main.a36e0a1c.js"
+    "static/css/main.fd9cddc8.css",
+    "static/js/main.88fd61c6.js"
   ]
 }
