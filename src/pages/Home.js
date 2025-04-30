@@ -36,7 +36,7 @@ function Home() {
             <Link to="/focus" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-2`}>
               Why FocusTube ?
             </Link>
-            <hr className="border-t-1 border-[#FF0000] w-screen mx-0 bottom-1 mb-4" />
+            {/* <hr className="border-t-1 border-[#FF0000] w-screen mx-0 bottom-1 mb-4" /> */}
 
             {/* <hr className="w-screen border-t-2 border-[#FF0000] mx-auto mb-6" /> */}
 
