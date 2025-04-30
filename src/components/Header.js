@@ -8,7 +8,7 @@ import { mindsetItems, technologyItems,travelItems,   animalItems} from './Const
 
 function Header({ toggleDarkMode, darkMode }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   // const [openHealth, setOpenHealth] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false); // ✅ Fix: Add this back
 
@@ -36,8 +36,7 @@ function Header({ toggleDarkMode, darkMode }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const [openHealth, setOpenHealth] = useState(false);
-  const [openMind, setOpenMind] = useState(false);
+  const [openHealth, setOpenHealth] = useState(true);
 
 
 
@@ -167,7 +166,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
 
     <nav className="flex flex-col space-y-1 font-semibold text-lg   mt-12">
-      <hr className="border-t-2 py-0 border-[#FF0000] w-full mt-[-2px]" />
+      <hr className="border-t-1 py-0 border-[#FF0000] w-full mt-[-2px]" />
 
      
       <div className="overflow-y-auto h-[calc(100vh-80px)]  text-white  py-6 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-black md:hidden">
@@ -175,7 +174,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
       <div className="md:hidden w-full">
       <button
-        onClick={() => setOpenMind(!openMind)}
+        // onClick={() => setOpenMind(!openMind)}
         className={`w-full text-left flex justify-between items-center py-2 px-4 ${
           darkMode ? "text-gray-900" : "text-gray-100"
         }`}
@@ -183,7 +182,7 @@ function Header({ toggleDarkMode, darkMode }) {
         <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
           Mind-Set
         </span>
-        <span>{open ? "▲" : "▼"}</span>
+        <span>{open ? "" : "▼"}</span>
       </button>
 
       {open && (
@@ -210,7 +209,7 @@ function Header({ toggleDarkMode, darkMode }) {
       
     <div className="md:hidden w-full">
   <button
-    onClick={() => setOpenHealth(!openHealth)}
+    // onClick={() => setOpenHealth(!openHealth)}
     className={`w-full text-left flex justify-between items-center py-2 px-4 ${
       darkMode ? "text-gray-900" : "text-gray-100"
     }`}
@@ -218,35 +217,37 @@ function Header({ toggleDarkMode, darkMode }) {
     <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
       Health
     </span>
-    <span>{openHealth ? "▲" : "▼"}</span>
+    <span>{openHealth ? "" : "▼"}</span>
   </button>
 
   {openHealth && (
-    <ul className="px-6 py-2 space-y-2 text-sm font-medium">
-      {[
-        { text: "Daily Healthy Habits", link: "/health/habits" },
-        { text: "Natural Remedies", link: "/health/remedies" },
-        { text: "Fitness for Beginners", link: "/health/fitness" },
-        { text: "Boosting Immunity", link: "/health/immunity" },
-        { text: "Healthy Diet Plans", link: "/health/diet" },
-        { text: "Mental Health & Self-Care", link: "/health/mental" },
-        { text: "Morning Yoga Routine", link: "/health/yoga" },
-        { text: "Superfoods List", link: "/health/superfoods" },
-        { text: "Detox Naturally", link: "/health/detox" },
-        { text: "Healthy Smoothies", link: "/health/smoothies" },
-      ].map(({ text, link }) => (
-        <li key={link}>
-          <Link
-            to={link}
-            className={`block pl-2 transition-colors duration-300 ${
-              darkMode ? "text-gray-900 hover:text-red-500" : "text-gray-100 hover:text-red-600"
-            }`}
-          >
-            {text}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <ul className="px-6 py-2 space-y-3 text-sm">
+  {[
+    { text: "Daily Healthy Habits", link: "/health/habits" },
+    { text: "Natural Remedies", link: "/health/remedies" },
+    { text: "Fitness for Beginners", link: "/health/fitness" },
+    { text: "Boosting Immunity", link: "/health/immunity" },
+    { text: "Healthy Diet Plans", link: "/health/diet" },
+    { text: "Mental Health & Self-Care", link: "/health/mental" },
+    { text: "Morning Yoga Routine", link: "/health/yoga" },
+    { text: "Superfoods List", link: "/health/superfoods" },
+    { text: "Detox Naturally", link: "/health/detox" },
+    { text: "Healthy Smoothies", link: "/health/smoothies" },
+  ].map(({ text, link }) => (
+    <li key={link}>
+      <Link
+        to={link}
+        className={`flex items-center space-x-2 pl-2 transition-colors duration-300 ${
+          darkMode ? "text-gray-900 hover:text-red-500" : "text-gray-100 hover:text-red-600"
+        }`}
+      >
+        <span className="w-2 h-2 bg-red-600 rounded-full"></span>
+        <span>{text}</span>
+      </Link>
+    </li>
+  ))}
+</ul>
+
   )}
 </div>
 
@@ -254,7 +255,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
       <div className="md:hidden w-full">
       <button
-        onClick={() => setOpen(!open)}
+        // onClick={() => setOpen(!open)}
         className={`w-full text-left flex justify-between items-center py-2 px-4 ${
           darkMode ? "text-gray-900" : "text-gray-100"
         }`}
@@ -262,7 +263,7 @@ function Header({ toggleDarkMode, darkMode }) {
         <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
           Technology
         </span>
-        <span>{open ? "▲" : "▼"}</span>
+        <span>{open ? "" : "▼"}</span>
       </button>
 
       {open && (
@@ -288,7 +289,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
     <div className="md:hidden w-full">
       <button
-        onClick={() => setOpen(!open)}
+        // onClick={() => setOpen(!open)}
         className={`w-full text-left flex justify-between items-center py-2 px-4 ${
           darkMode ? "text-gray-900" : "text-gray-100"
         }`}
@@ -296,7 +297,7 @@ function Header({ toggleDarkMode, darkMode }) {
         <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
           Traveling
         </span>
-        <span>{open ? "▲" : "▼"}</span>
+        <span>{open ? "" : "▼"}</span>
       </button>
 
       {open && (
@@ -321,7 +322,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
     <div className="md:hidden w-full">
   <button
-    onClick={() => setOpenHealth(!openHealth)}
+    // onClick={() => setOpenHealth(!openHealth)}
     className={`w-full text-left flex justify-between items-center py-2 px-4 ${
       darkMode ? "text-gray-900" : "text-gray-100"
     }`}
@@ -329,7 +330,7 @@ function Header({ toggleDarkMode, darkMode }) {
     <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
       Health
     </span>
-    <span>{openHealth ? "▲" : "▼"}</span>
+    <span>{openHealth ? "" : "▼"}</span>
   </button>
 
   {openHealth && (
@@ -375,7 +376,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
       <div className="md:hidden w-full">
       <button
-        onClick={() => setOpen(!open)}
+        // onClick={() => setOpen(!open)}
         className={`w-full text-left flex justify-between  items-center py-2 px-4 ${
           darkMode ? "text-gray-900" : "text-gray-100"
         }`}
@@ -383,7 +384,7 @@ function Header({ toggleDarkMode, darkMode }) {
         <span className={` bottom-[13px] ${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
           Animal
         </span>
-        <span>{open ? "▲" : "▼"}</span>
+        <span>{open ? "" : "▼"}</span>
       </button>
 
       {open && (
