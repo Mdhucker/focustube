@@ -29,7 +29,7 @@ function Home() {
       {/* <div class="container mx-auto px-4 sm:px-6 lg:px-8"> */}
 
       {/* Hero Section */}
-      <div className={`container mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden text-white min-h-screen ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
+      <div className={`container mx-auto px-4 sm:px-6 lg:px-8 transition-colors duration-300 overflow-x-hidden text-white min-h-screen ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
         <div className="flex flex-1 flex-col items-center p-6">
 
 

@@ -128,18 +128,18 @@ function Header({ toggleDarkMode, darkMode }) {
         </div>
 
       {/* Search Input for Mobile (Below Header) */}
+   
       <div
-        className={`px-4 py-2 shadow-sm transition-all md:hidden
-          ${darkMode ? "bg-[#fcfaf7]" : "bg-[#121212]"}`}
-      >
-        <input
-          type="text"
-          placeholder="Search..."
-          className={`w-full px-4 py-2 rounded-md border text-sm
-            ${darkMode ? "bg-white text-gray-700 border-[#555]" : "bg-[#333333] text-gray-100 border-gray-300"} 
-            focus:outline-none focus:ring-1 focus:ring-[#FF0000] focus:border-transparent transition-all`}
-        />
-      </div>
+  className={` shadow-sm md:flex ${darkMode ? "bg-" : "bg-"}`}
+>
+  <input
+    type="text"
+    placeholder="Search..."
+    className={`w-full md:w-[60%] mx-auto my-2 px-4 py-2 rounded-md border text-sm 
+      ${darkMode ? "bg-white text-gray-700 border-[#555]" : "bg-[#333333] text-gray-100 border-gray-300"} 
+      focus:outline-none focus:ring-1 focus:ring-[#FF0000] focus:border-transparent transition-transform duration-300 ease-in-out`}
+  />
+</div>
 
       {/* Mobile Slide Menu */}
       {/* Overlay */}
@@ -158,7 +158,7 @@ function Header({ toggleDarkMode, darkMode }) {
       ${darkMode ? "bg-white text-gray-300" : " bg-[#111111] text-gray-700"} 
       shadow-lg transform 
       ${menuOpen ? "translate-x-0" : "-translate-x-full"} 
-      transition-transform duration-300 ease-in-out z-50 p-6`}
+      transition-transform duration-300 ease-in-out z-50 p-4`}
     onClick={(e) => e.stopPropagation()} // prevent close when clicking inside
   >
     <Link
@@ -272,7 +272,7 @@ function Header({ toggleDarkMode, darkMode }) {
       {open && (
         <ul className="px-6 py-2 space-y-3 text-sm">
           {technologyItems.map(({ icon: Icon, text, link }) => (
-            <li key={link} className="flex items-center gap-3">
+            <li key={link} className="flex items-center gap-3 transition-colors duration-300">
               <Icon className="w-4 h-4 text-red-500" />
               <Link
                 to={link}
@@ -306,7 +306,7 @@ function Header({ toggleDarkMode, darkMode }) {
       {open && (
         <ul className="px-6 py-2 space-y-3 text-sm">
           {travelItems.map(({ icon: Icon, text, link }) => (
-            <li key={link} className="flex items-center gap-3">
+            <li key={link} className="flex items-center gap-3 transition-colors duration-300">
               <Icon className="w-4 h-4 text-red-500" />
               <Link
                 to={link}
@@ -345,7 +345,7 @@ function Header({ toggleDarkMode, darkMode }) {
           <Icon className="w-4 h-4 text-red-500" />
           <Link
             to={link}
-            className={`block ${
+            className={`block transition-colors duration-300${
               darkMode ? "text-gray-800" : "text-gray-100"
             } hover:text-red-500`}
           >
@@ -397,7 +397,7 @@ function Header({ toggleDarkMode, darkMode }) {
               <Icon className="w-4 h-4 text-red-500" />
               <Link
                 to={link}
-                className={`block ${
+                className={`block transition-colors duration-300${
                   darkMode ? "text-gray-800" : "text-gray-100"
                 } hover:text-red-500`}
               >
