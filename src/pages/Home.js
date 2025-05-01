@@ -34,14 +34,16 @@ function Home() {
 
 
             <Link to="/focus" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-2`}>
-              Why FocusTube ?
+              " Why <span></span>
+              <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>Focus</span>
+                    <span className={`${darkMode ? "text-[#FF0000]" : "text-white"}`}>Tube</span> ? "
             </Link>
-            {/* <hr className="border-t-1 border-[#FF0000] w-screen mx-0 bottom-1 mb-4" /> */}
-
-            {/* <hr className="w-screen border-t-2 border-[#FF0000] mx-auto mb-6" /> */}
-
+            
+         
+         
+         
           {/* Video Grid Section */}
-          <section className="video-grid">
+      <section className="video-grid">
 
 
 

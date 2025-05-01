@@ -38,7 +38,32 @@ function Header({ toggleDarkMode, darkMode }) {
 
   const [openHealth] = useState(true);
 
-
+  useEffect(() => {
+    const body = document.body;
+  
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+  
+    if (menuOpen) {
+      // Store original values in attributes to restore later
+      body.dataset.overflow = body.style.overflow || "";
+      body.dataset.paddingRight = body.style.paddingRight || "";
+  
+      body.style.overflow = "hidden";
+  
+      if (scrollBarWidth > 0) {
+        body.style.paddingRight = `${scrollBarWidth}px`;
+      }
+    } else {
+      body.style.overflow = body.dataset.overflow;
+      body.style.paddingRight = body.dataset.paddingRight;
+    }
+  
+    return () => {
+      body.style.overflow = body.dataset.overflow;
+      body.style.paddingRight = body.dataset.paddingRight;
+    };
+  }, [menuOpen]);
+  
 
   return (
     <>
@@ -79,8 +104,7 @@ function Header({ toggleDarkMode, darkMode }) {
           {/* Right: Dark Mode, Hamburger */}
           <div className="flex items-center space-x-3">
             {/* Dark Mode Toggle */}
-           
-{/* Dark Mode Toggle */}
+ {/* Dark Mode Toggle */}
 <button
   onClick={toggleDarkMode}
   className={`w-8 h-8 flex items-center justify-center text-2xl transition-colors 
@@ -92,7 +116,7 @@ function Header({ toggleDarkMode, darkMode }) {
 {/* Hamburger Icon (Mobile Only) */}
 <button
   onClick={handleMenuToggle}
-  className={`w-8 h-8 flex items-center justify-center text-2xl md:hidden focus:outline-none 
+  className={`w-10 h-10 flex items-center justify-center text-[28px] md:hidden focus:outline-none 
     ${darkMode ? "text-black" : "text-white"}`}
 >
   <span className="block w-full text-center">{menuOpen ? "X" : "☰"}</span>
