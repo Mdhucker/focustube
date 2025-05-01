@@ -36,48 +36,8 @@ import {
     { icon: Heart, text: "Life Balance & Resilience", link: "/mindset/life" },
   ];
   
-  // export const technologyItems = [
-  //   { icon: Cpu, text: "Artificial Intelligence", link: "/technology/ai" },
-  //   { icon: Database, text: "Data Science", link: "/technology/data-science" },
-  //   { icon: Cloud, text: "Cloud Computing", link: "/technology/cloud" },
-  //   { icon: Smartphone, text: "Mobile Development", link: "/technology/mobile" },
-  //   { icon: Shield, text: "Cyber Security", link: "/technology/security" },
-  //   { icon: Globe, text: "Web Development", link: "/technology/web" },
-  // ];
   
-  // export const travelItems = [
-  //   { icon: Plane, text: "Flights", link: "/traveling/flights" },
-  //   { icon: Globe2, text: "International Tours", link: "/traveling/international" },
-  //   { icon: MapPin, text: "Local Destinations", link: "/traveling/local" },
-  //   { icon: Hotel, text: "Hotel Bookings", link: "/traveling/hotels" },
-  //   { icon: Compass, text: "Guided Tours", link: "/traveling/guides" },
-  //   { icon: Calendar, text: "Travel Planning", link: "/traveling/planning" },
-  // ];
 
-  // export const healthItems = [
-  //   { text: "Daily Healthy Habits", link: "/health/habits" },
-  //   { text: "Natural Remedies", link: "/health/remedies" },
-  //   { text: "Fitness for Beginners", link: "/health/fitness" },
-  //   { text: "Boosting Immunity", link: "/health/immunity" },
-  //   { text: "Healthy Diet Plans", link: "/health/diet" },
-  //   { text: "Mental Health & Self-Care", link: "/health/mental" },
-  //   { text: "Morning Yoga Routine", link: "/health/yoga" },
-  //   { text: "Superfoods List", link: "/health/superfoods" },
-  //   { text: "Detox Naturally", link: "/health/detox" },
-  //   { text: "Healthy Smoothies", link: "/health/smoothies" },
-  // ]
-  
-  // export const animalItems = [
-  //   { icon: PawPrint, text: "Animal Mindset", link: "/animal/mindset" },
-  //   { icon: Dog, text: "Dogs", link: "/animal/dogs" },
-  //   { icon: Cat, text: "Cats", link: "/animal/cats" },
-  //   { icon: Rabbit, text: "Rabbits", link: "/animal/rabbits" },
-  //   { icon: Fish, text: "Aquatic Life", link: "/animal/fish" },
-  //   { icon: Bird, text: "Birds", link: "/animal/birds" },
-  //   { icon: Bone, text: "Animal Nutrition", link: "/animal/nutrition" },
-  //   { icon: Bug, text: "Insects & Bugs", link: "/animal/bugs" },
-  // ];
-  
 // These icons are used in Desktop navigation side bar
 
   export const mindset_nav = [
@@ -107,12 +67,12 @@ import {
           { icon: Code, text: "Learn Block Chain", link: "/tech/blockChain" },
       
 
-          { icon: Cpu, text: "Artificial Intelligence", link: "/technology/ai" },
-          { icon: Database, text: "Data Science", link: "/technology/data-science" },
-          { icon: Cloud, text: "Cloud Computing", link: "/technology/cloud" },
-          { icon: Smartphone, text: "Mobile Development", link: "/technology/mobile" },
-          { icon: Shield, text: "Cyber Security", link: "/technology/security" },
-          { icon: Globe, text: "Web Development", link: "/technology/web" },
+          { icon: Cpu, text: "Artificial Intelligence", link: "/tech/ai" },
+          { icon: Database, text: "Data Science", link: "/tech/data-science" },
+          { icon: Cloud, text: "Cloud Computing", link: "/tech/cloud" },
+          { icon: Smartphone, text: "Mobile Development", link: "/tech/mobile" },
+          { icon: Shield, text: "Cyber Security", link: "/tech/security" },
+          { icon: Globe, text: "Web Development", link: "/tech/web" },
         ]
 
 
@@ -130,12 +90,12 @@ export const travel_nav = [
   { icon: FaSpa, text: "Wellness Travel", link: "/travel/wellness" },
   { icon: FaPen, text: "Travel Blogging/Vlogging", link: "/travel/blogging" },
   
-  { icon: Plane, text: "Flights", link: "/traveling/flights" },
-  { icon: Globe2, text: "International Tours", link: "/traveling/international" },
-  { icon: MapPin, text: "Local Destinations", link: "/traveling/local" },
-  { icon: Hotel, text: "Hotel Bookings", link: "/traveling/hotels" },
-  { icon: Compass, text: "Guided Tours", link: "/traveling/guides" },
-  { icon: Calendar, text: "Travel Planning", link: "/traveling/planning" },
+  { icon: Plane, text: "Flights", link: "/travel/flights" },
+  { icon: Globe2, text: "International Tours", link: "/travel/international" },
+  { icon: MapPin, text: "Local Destinations", link: "/travel/local" },
+  { icon: Hotel, text: "Hotel Bookings", link: "/travel/hotels" },
+  { icon: Compass, text: "Guided Tours", link: "/travel/guides" },
+  { icon: Calendar, text: "Travel Planning", link: "/travel/planning" },
 ]
 
 export const animal_nav = [
@@ -178,3 +138,9 @@ export const health_nav = [
   { icon: FaStethoscope, text: "Doctor Advice", link: "/health/advice" },
   { icon: FaSmile, text: "Healthy Lifestyle", link: "/health/lifestyle" },
 ];
+
+
+
+
+
+

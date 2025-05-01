@@ -1,22 +1,27 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-// import Children from './pages/Children';
-// import MindSet from './pages/MindSet';
-// import Technology from './pages/Technology';
-// import Traveling from './pages/Traveling';
-// import Health from './pages/Health';
-// import Animals from './pages/Animals';
+import HealthPage from './pages/HealthPage';
+import KidsPage from './pages/KidsPage';
+import MindsetPage from './pages/MindsetPage';
+import TechPage from './pages/TechPage';
+import TravelPage from './pages/TravelPage';
 
-// import About from './pages/About';
+
 
 function App() {
   return (
     <BrowserRouter basename="/focustube">
       <Routes>
         <Route path="/" element={<Home />} />
-        
+        <Route path="/health/:section" element={<HealthPage />} />
+        <Route path="/kids/:section" element={<KidsPage />} />
+        <Route path="/mindset/:section" element={<MindsetPage />} />
+        <Route path="/tech/:section" element={<TechPage />} />
+        <Route path="/travel/:section" element={<TravelPage />} />
 
-        {/* <Route path="/about" element={<About />} /> */}
+
+
+
       </Routes>
     </BrowserRouter>
   );
