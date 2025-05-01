@@ -4,13 +4,15 @@ import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 // import SideBar from './SideBar';
 // import { mindsetItems, technologyItems, travelItems, animalItems } from './Const'; // Import the items from Const.js
-import { mindsetItems, technology_nav,travel_nav,   animal_nav,health_nav} from './Const'; // Import the items from Const.js
+import { mindsetItems, technology_nav,travel_nav,   animal_nav,health_nav,kids_nav} from './Const'; // Import the items from Const.js
 
 function Header({ toggleDarkMode, darkMode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [open] = useState(true);
   // const [openHealth, setOpenHealth] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false); // ✅ Fix: Add this back
+  const [openDrop, setOpenDrop] = useState(true);
+  const [openMindset, setOpenMindset] = useState(false);
 
 
   useEffect(() => {
@@ -68,6 +70,8 @@ function Header({ toggleDarkMode, darkMode }) {
   }, [menuOpen]);
   
 
+
+  
   return (
     <>
       {/* Header Section */}
@@ -132,17 +136,20 @@ function Header({ toggleDarkMode, darkMode }) {
 
       {/* Search Input for Mobile (Below Header) */}
    
-      <div
-  className={` shadow-sm md:flex ${darkMode ? "bg-" : "bg-"}`}
->
-  <input
-    type="text"
-    placeholder="Search..."
-    className={`w-full md:w-[60%] mx-auto my-2 px-4 py-2 rounded-md border text-sm 
-      ${darkMode ? "bg-white text-gray-700 border-[#555]" : "bg-[#333333] text-gray-100 border-gray-300"} 
-      focus:outline-none focus:ring-1 focus:ring-[#FF0000] focus:border-transparent transition-transform duration-300 ease-in-out`}
-  />
+      <div className={`shadow-sm md:flex ${darkMode ? "bg-white" : "bg-[#1a1a1a]"}`}>
+  <div className="w-full md:w-[60%] mx-auto my-2">
+    <input
+      type="text"
+      placeholder="Search topics like AI, Travel, Wellness, Pets..."
+      className={`w-full px-4 py-3 pr-28 rounded-md border text-sm outline-none 
+ focus:border-red-600
+        ${darkMode ? "bg-white text-gray-700 border-[#555]" : "bg-[#333333] text-gray-100 border-gray-300"}
+      `}
+    />
+  </div>
 </div>
+
+
 
       {/* Mobile Slide Menu */}
       {/* Overlay */}
@@ -188,38 +195,37 @@ function Header({ toggleDarkMode, darkMode }) {
 
     <div className="overflow-y-auto h-[calc(100vh-80px)] text-white py-6 pb-20 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-black md:hidden">
 
+    <div className="md:hidden w-full">
+  <button
+    onClick={() => setOpenDrop(!openDrop)}
+    className={`w-full text-left flex justify-between items-center py-2 px-4 ${
+      darkMode ? "text-gray-900" : "text-gray-100"
+    }`}
+  >
+    <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
+      Mind-Set
+    </span>
+    <span>{openDrop ? "▲" : "▼"}</span>
+  </button>
 
-      <div className="md:hidden w-full">
-      <button
-        // onClick={() => setOpenMind(!openMind)}
-        className={`w-full text-left flex justify-between items-center py-2 px-4 ${
-          darkMode ? "text-gray-900" : "text-gray-100"
-        }`}
-      >
-        <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
-          Mind-Set
-        </span>
-        <span>{open ? "" : "▼"}</span>
-      </button>
-
-      {open && (
-        <ul className="px-6 py-2 space-y-3 text-sm">
-          {mindsetItems.map(({ icon: Icon, text, link }) => (
-            <li key={link} className="flex items-center gap-3">
-              <Icon className="w-4 h-4 text-red-500" />
-              <Link
-                to={link}
-                className={`block ${
-                  darkMode ? "text-gray-800" : "text-gray-100"
-                } hover:text-red-500`}
-              >
-                {text}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+  {openDrop && (
+    <ul className="px-6 py-2 space-y-3 text-sm">
+      {mindsetItems.map(({ icon: Icon, text, link }) => (
+        <li key={link} className="flex items-center gap-3">
+          <Icon className="w-4 h-4 text-red-500" />
+          <Link
+            to={link}
+            className={`block ${
+              darkMode ? "text-gray-800" : "text-gray-100"
+            } hover:text-red-500`}
+          >
+            {text}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
 
 
 
@@ -325,81 +331,28 @@ function Header({ toggleDarkMode, darkMode }) {
     </div>
 
 
+
     <div className="md:hidden w-full">
-  <button
-    // onClick={() => setOpenHealth(!openHealth)}
-    className={`w-full text-left flex justify-between items-center py-2 px-4 ${
-      darkMode ? "text-gray-900" : "text-gray-100"
-    }`}
-  >
-    <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
-      Health
-    </span>
-    <span>{openHealth ? "" : "▼"}</span>
-  </button>
-
-  {openHealth && (
-    <ul className="px-6 py-2 space-y-3 text-sm">
-      {
-        
-      health_nav.map(({ icon: Icon, text, link }) => (
-        <li key={link} className="flex items-center gap-3">
-          <Icon className="w-4 h-4 text-red-500" />
-          <Link
-            to={link}
-            className={`block transition-colors duration-300${
-              darkMode ? "text-gray-800" : "text-gray-100"
-            } hover:text-red-500`}
-          >
-            {text}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  )}
-</div>
-
-
-<ul className="grid grid-cols-1 gap-1 mt-2 text-sm font-medium">
-  {[
-   
-  ].map(({ text, link }) => (
-    <li key={link}>
-      <Link
-        to={link}
-        className={`block py-1 pl-2 transition-colors duration-300 ${
-          darkMode ? "text-gray-900 hover:text-red-500" : "text-gray-100 hover:text-red-600"
-        }`}
-      >
-        {text}
-      </Link>
-    </li>
-  ))}
-</ul>
-
-     
-
-      <div className="md:hidden w-full">
       <button
         // onClick={() => setOpen(!open)}
-        className={`w-full text-left flex justify-between  items-center py-2 px-4 ${
+        className={`w-full text-left flex justify-between items-center py-2 px-4 ${
           darkMode ? "text-gray-900" : "text-gray-100"
         }`}
       >
-        <span className={` bottom-[13px] ${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
-          Animal
+        <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
+          Children
         </span>
         <span>{open ? "" : "▼"}</span>
       </button>
 
       {open && (
         <ul className="px-6 py-2 space-y-3 text-sm">
-          {animal_nav.map(({ icon: Icon, text, link }) => (
-            <li key={link} className="flex items-center gap-3">
+          {kids_nav.map(({ icon: Icon, text, link }) => (
+            <li key={link} className="flex items-center gap-3 transition-colors duration-300">
               <Icon className="w-4 h-4 text-red-500" />
               <Link
                 to={link}
-                className={`block transition-colors duration-300${
+                className={`block ${
                   darkMode ? "text-gray-800" : "text-gray-100"
                 } hover:text-red-500`}
               >
@@ -410,6 +363,41 @@ function Header({ toggleDarkMode, darkMode }) {
         </ul>
       )}
     </div>
+     
+
+    <div className="md:hidden w-full">
+      <button
+        // onClick={() => setOpen(!open)}
+        className={`w-full text-left flex justify-between items-center py-2 px-4 ${
+          darkMode ? "text-gray-900" : "text-gray-100"
+        }`}
+      >
+        <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
+          Animals
+        </span>
+        <span>{open ? "" : "▼"}</span>
+      </button>
+
+      {open && (
+        <ul className="px-6 py-2 space-y-3 text-sm">
+          {animal_nav.map(({ icon: Icon, text, link }) => (
+            <li key={link} className="flex items-center gap-3 transition-colors duration-300">
+              <Icon className="w-4 h-4 text-red-500" />
+              <Link
+                to={link}
+                className={`block ${
+                  darkMode ? "text-gray-800" : "text-gray-100"
+                } hover:text-red-500`}
+              >
+                {text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+     
+     
     </div>
 
   </div>
