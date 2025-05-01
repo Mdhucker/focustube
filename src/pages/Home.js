@@ -4,18 +4,19 @@ import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 
 function Home() {
-  const [darkMode, setDarkMode] = useState(false);
 
-  // Set the body background color when the theme changes
-  useEffect(() => {
-    if (darkMode) {
-      document.body.style.backgroundColor = '#121212'; // Dark color
-      document.body.style.color = '#fff'; // Light text color
-    } else {
-      document.body.style.backgroundColor = '#fff'; // Light color
-      document.body.style.color = '#000'; // Dark text color
-    }
-  }, [darkMode]);
+  // // Set the body background color when the theme changes
+  // useEffect(() => {
+  //   if (darkMode) {
+  //     document.body.style.backgroundColor = '#121212'; // Dark color
+  //     document.body.style.color = '#fff'; // Light text color
+  //   } else {
+  //     document.body.style.backgroundColor = '#fff'; // Light color
+  //     document.body.style.color = '#000'; // Dark text color
+  //   }
+  // }, [darkMode]);
+
+  const [darkMode, setDarkMode] = useState(false);
 
   // Toggle function
   const toggleDarkMode = () => {

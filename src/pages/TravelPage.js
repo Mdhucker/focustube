@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
 
-// pages/TravelPage.jsx
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 
 const travelContent = {
@@ -80,6 +82,12 @@ const travelContent = {
 export default function TravelPage() {
   const { section } = useParams();
   const data = travelContent[section];
+const [darkMode, setDarkMode] = useState(false);
+
+  // Toggle function
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   if (!data) {
     return (
@@ -90,9 +98,15 @@ export default function TravelPage() {
   }
 
   return (
+
+    <>
+    <Header toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-4">{data.title}</h1>
       <p>{data.content}</p>
     </div>
+    <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>
+    </>
+   
   );
 }

@@ -1,15 +1,7 @@
 import React from "react";
-// import Header from '../components/Header';
-// import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import {mindset_nav,technology_nav,travel_nav,animal_nav,kids_nav,health_nav } from './Const'; // Import the items from Const.js
 
-// import { FaDog, FaCat, FaFish, FaPaw, FaRecycle, FaLeaf, FaFlask, FaCamera, FaHandsHelping, FaHeartbeat } from 'react-icons/fa';
-// import { FaPlane, FaGlobe, FaHotel, FaTree, FaUserAlt, FaUsers, FaMoneyBillAlt, FaCar, FaLaptop, FaShip, FaSpa, FaPen } from 'react-icons/fa';
-
-// import {
-//   Lightbulb,Users,Briefcase,Layers,DollarSign,BookOpen,Handshake,AlertTriangle,Heart,
-// } from "lucide-react";
 
 import {
   // Smartphone,Cpu, Code, Bug,

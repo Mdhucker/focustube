@@ -38,6 +38,9 @@ function Header({ toggleDarkMode, darkMode }) {
 
   const [openHealth] = useState(true);
 
+
+
+  // Fix: Add this useEffect to handle body overflow and padding
   useEffect(() => {
     const body = document.body;
   

@@ -1,5 +1,6 @@
 
-// pages/MindsetPage.jsx
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 
 const mindsetContent = {
@@ -45,7 +46,7 @@ const mindsetContent = {
   },
 };
 
-export default function MindsetPage() {
+export default function MindsetPage({ toggleDarkMode, darkMode }) {
   const { section } = useParams();
   const data = mindsetContent[section];
 
@@ -58,9 +59,15 @@ export default function MindsetPage() {
   }
 
   return (
-    <div className="p-6">
+    <>
+      <Header toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+
+      <div className="p-6">
       <h1 className="text-3xl font-bold mb-4">{data.title}</h1>
       <p>{data.content}</p>
     </div>
+    <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+    </>
+ 
   );
 }
