@@ -205,7 +205,7 @@ function Header({ toggleDarkMode, darkMode }) {
     <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
       Mind-Set
     </span>
-    <span>{openDrop ? "▲" : "▼"}</span>
+    <span>{openDrop ? "" : "▼"}</span>
   </button>
 
   {openDrop && (
