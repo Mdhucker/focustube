@@ -5,6 +5,8 @@ import KidsPage from './pages/KidsPage';
 import MindsetPage from './pages/MindsetPage';
 import TechPage from './pages/TechPage';
 import TravelPage from './pages/TravelPage';
+import AnimalPage from './pages/AnimalPage';
+
 
 
 
@@ -17,7 +19,10 @@ function App() {
         <Route path="/kids/:section" element={<KidsPage />} />
         <Route path="/mindset/:section" element={<MindsetPage />} />
         <Route path="/tech/:section" element={<TechPage />} />
+        <Route path="/animals/:section" element={<AnimalPage />} />
         <Route path="/travel/:section" element={<TravelPage />} />
+
+
 
 
 
