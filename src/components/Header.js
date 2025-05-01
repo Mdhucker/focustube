@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 // import SideBar from './SideBar';
 // import { mindsetItems, technologyItems, travelItems, animalItems } from './Const'; // Import the items from Const.js
-import { mindsetItems, technologyItems,travelItems,   animalItems,healthItems} from './Const'; // Import the items from Const.js
+import { mindsetItems, technology_nav,travel_nav,   animal_nav,health_nav} from './Const'; // Import the items from Const.js
 
 function Header({ toggleDarkMode, darkMode }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -220,39 +220,38 @@ function Header({ toggleDarkMode, darkMode }) {
 
 
 
-      
+    
     <div className="md:hidden w-full">
-  <button
-    // onClick={() => setOpenHealth(!openHealth)}
-    className={`w-full text-left flex justify-between items-center py-2 px-4 ${
-      darkMode ? "text-gray-900" : "text-gray-100"
-    }`}
-  >
-    <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
-      Health
-    </span>
-    <span>{openHealth ? "" : "▼"}</span>
-  </button>
-
-  {openHealth && (
-    <ul className="px-6 py-2 space-y-3 text-sm">
-  {healthItems.map(({ text, link }) => (
-    <li key={link}>
-      <Link
-        to={link}
-        className={`flex items-center space-x-2 pl-2 transition-colors duration-300 ${
-          darkMode ? "text-gray-900 hover:text-red-500" : "text-gray-100 hover:text-red-600"
+      <button
+        // onClick={() => setOpenMind(!openMind)}
+        className={`w-full text-left flex justify-between items-center py-2 px-4 ${
+          darkMode ? "text-gray-900" : "text-gray-100"
         }`}
       >
-        <span className="w-2 h-2 bg-red-600 rounded-full"></span>
-        <span>{text}</span>
-      </Link>
-    </li>
-  ))}
-</ul>
+        <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
+          Health
+        </span>
+        <span>{open ? "" : "▼"}</span>
+      </button>
 
-  )}
-</div>
+      {open && (
+        <ul className="px-6 py-2 space-y-3 text-sm">
+          {health_nav.map(({ icon: Icon, text, link }) => (
+            <li key={link} className="flex items-center gap-3">
+              <Icon className="w-4 h-4 text-red-500" />
+              <Link
+                to={link}
+                className={`block ${
+                  darkMode ? "text-gray-800" : "text-gray-100"
+                } hover:text-red-500`}
+              >
+                {text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
 
 
 
@@ -271,7 +270,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
       {open && (
         <ul className="px-6 py-2 space-y-3 text-sm">
-          {technologyItems.map(({ icon: Icon, text, link }) => (
+          {technology_nav.map(({ icon: Icon, text, link }) => (
             <li key={link} className="flex items-center gap-3 transition-colors duration-300">
               <Icon className="w-4 h-4 text-red-500" />
               <Link
@@ -305,7 +304,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
       {open && (
         <ul className="px-6 py-2 space-y-3 text-sm">
-          {travelItems.map(({ icon: Icon, text, link }) => (
+          {travel_nav.map(({ icon: Icon, text, link }) => (
             <li key={link} className="flex items-center gap-3 transition-colors duration-300">
               <Icon className="w-4 h-4 text-red-500" />
               <Link
@@ -338,9 +337,9 @@ function Header({ toggleDarkMode, darkMode }) {
 
   {openHealth && (
     <ul className="px-6 py-2 space-y-3 text-sm">
-      {[
+      {
         
-      ].map(({ icon: Icon, text, link }) => (
+      health_nav.map(({ icon: Icon, text, link }) => (
         <li key={link} className="flex items-center gap-3">
           <Icon className="w-4 h-4 text-red-500" />
           <Link
@@ -392,7 +391,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
       {open && (
         <ul className="px-6 py-2 space-y-3 text-sm">
-          {animalItems.map(({ icon: Icon, text, link }) => (
+          {animal_nav.map(({ icon: Icon, text, link }) => (
             <li key={link} className="flex items-center gap-3">
               <Icon className="w-4 h-4 text-red-500" />
               <Link
