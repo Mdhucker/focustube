@@ -2,16 +2,17 @@ import React from "react";
 // import Header from '../components/Header';
 // import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import {mindset_nav,technology_nav,travel_nav,animal_nav } from './Const'; // Import the items from Const.js
 
-import { FaDog, FaCat, FaFish, FaPaw, FaRecycle, FaLeaf, FaFlask, FaCamera, FaHandsHelping, FaHeartbeat } from 'react-icons/fa';
-import { FaPlane, FaGlobe, FaHotel, FaTree, FaUserAlt, FaUsers, FaMoneyBillAlt, FaCar, FaLaptop, FaShip, FaSpa, FaPen } from 'react-icons/fa';
+// import { FaDog, FaCat, FaFish, FaPaw, FaRecycle, FaLeaf, FaFlask, FaCamera, FaHandsHelping, FaHeartbeat } from 'react-icons/fa';
+// import { FaPlane, FaGlobe, FaHotel, FaTree, FaUserAlt, FaUsers, FaMoneyBillAlt, FaCar, FaLaptop, FaShip, FaSpa, FaPen } from 'react-icons/fa';
+
+// import {
+//   Lightbulb,Users,Briefcase,Layers,DollarSign,BookOpen,Handshake,AlertTriangle,Heart,
+// } from "lucide-react";
 
 import {
-  Lightbulb,Users,Briefcase,Layers,DollarSign,BookOpen,Handshake,AlertTriangle,Heart,
-} from "lucide-react";
-
-import {
-  Smartphone,Cpu, Laptop,Settings, Code,AppWindow, Timer, ShieldCheck, Bug,
+  // Smartphone,Cpu, Code, Bug,
 } from "lucide-react"; // install with: npm install lucide-react
 
 function NavBar({toggleDarkMode, darkMode }) {
@@ -29,7 +30,7 @@ function NavBar({toggleDarkMode, darkMode }) {
   {/* Main Title */}
   <Link
     to=""
-    className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-red-700" : "text-gray-100"}`}
+    className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
     >
     Mind-Set
   </Link>
@@ -38,8 +39,8 @@ function NavBar({toggleDarkMode, darkMode }) {
     className={`
       absolute left-0 mt-3 w-[520px]
       bg-white border border-gray-200
-      dark:border-gray-600
-      rounded-md shadow-md
+ dark:border-red-600 
+       rounded-md shadow-md
       opacity-0 pointer-events-none
       group-hover:opacity-100 group-hover:pointer-events-auto
       transition-all duration-300 z-50
@@ -52,24 +53,14 @@ function NavBar({toggleDarkMode, darkMode }) {
       className={`
         absolute -top-2 left-6 w-4 h-4
         bg-white border-l border-t border-gray-200
-        dark:border-gray-700
+ dark:border-red-600 
         transform rotate-45 transition-colors duration-300
         ${darkMode ? "" : "dark:bg-[#1f1f1f]"}
       `}
     ></div>
     <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
-      {[
-        { icon: Lightbulb, text: "Innovation Mindset", link: "/mindset/innovation" },
-        { icon: Users, text: "Leadership Mindset", link: "/mindset/leadership" },
-        { icon: Briefcase, text: "Entrepreneurial Thinking", link: "/mindset/entrepreneurship" },
-        { icon: Layers, text: "Systems Thinking", link: "/mindset/systems" },
-        { icon: DollarSign, text: "Money Mindset", link: "/mindset/money" },
-        { icon: Code, text: "Programming Belief", link: "/mindset/programming" },
-        { icon: BookOpen, text: "Learning & Studying", link: "/mindset/learning" },
-        { icon: Handshake, text: "Negotiation & Influence", link: "/mindset/negotiation" },
-        { icon: AlertTriangle, text: "Overcoming Poverty", link: "/mindset/poverty" },
-        { icon: Heart, text: "Life Balance & Resilience", link: "/mindset/life" },
-      ].map(({ icon: Icon, text, link }) => (
+      {
+     mindset_nav.map(({ icon: Icon, text, link }) => (
         <li
           key={link}
           className={`
@@ -98,7 +89,7 @@ function NavBar({toggleDarkMode, darkMode }) {
   to=""
   // smooth={true}
   // duration={500}
-  className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-gray-700" : "text-gray-100"}`}
+  className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
 >
   Childrens
 </Link>
@@ -128,7 +119,7 @@ absolute left-0 mt-3 w-[520px]
                 opacity-0 pointer-events-none 
                 group-hover:opacity-100 group-hover:pointer-events-auto 
                 transition-all duration-300 z-50"
-                cursor-pointer hover:text-red-600 ${darkMode ? " bg-gray-100" : "dark:bg-[#1f1f1f]"}`}
+                cursor-pointer hover:text-red-600 ${darkMode ? " bg-black" : "dark:bg-[#1f1f1f]"}`}
   >
     {/* Arrow pointing to the title */}
   <div
@@ -146,19 +137,7 @@ absolute left-0 mt-3 w-[520px]
                  
     ></div>
 <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
-  {[
-    { icon: Smartphone, text: "Smartphone Reviews", link: "/tech/smartphones" },
-    { icon: Cpu, text: "Best AI Tools", link: "/tech/ai-tools" },
-    { icon: Laptop, text: "Laptop Comparisons", link: "/tech/laptops" },
-    { icon: Settings, text: "Build a PC", link: "/tech/build-a-pc" },
-    { icon: Code, text: "Learn to Code", link: "/tech/coding" },
-    { icon: AppWindow, text: "Top Apps", link: "/tech/apps" },
-    { icon: Timer, text: "Tech for Productivity", link: "/tech/productivity" },
-    { icon: Bug, text: "Hacking Basics", link: "/tech/hacking-basics" },
-    { icon: ShieldCheck, text: "Cybersecurity Tips", link: "/tech/cybersecurity" },
-    { icon: Code, text: "Learn Block Chain", link: "/tech/blockChain" },
-
-  ].map(({ icon: Icon, text, link }) => (
+  {technology_nav.map(({ icon: Icon, text, link }) => (
     <li
       key={link}
       // className="flex items-center gap-1 
@@ -197,7 +176,7 @@ absolute left-0 mt-3 w-[520px]
   {/* Main Title */}
   <Link
     to=""
-    className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-gray-700" : "text-gray-100"}`}
+    className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
   >
     Travel
   </Link>
@@ -225,20 +204,7 @@ absolute left-0 mt-3 w-[520px]
     ></div>
 
     <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
-      {[
-        { icon: FaPlane, text: "Adventure Travel", link: "/travel/adventure" },
-        { icon: FaGlobe, text: "Cultural Travel", link: "/travel/cultural" },
-        { icon: FaHotel, text: "Luxury Travel", link: "/travel/luxury" },
-        { icon: FaTree, text: "Sustainable Travel", link: "/travel/sustainable" },
-        { icon: FaUserAlt, text: "Solo Travel", link: "/travel/solo" },
-        { icon: FaUsers, text: "Family Travel", link: "/travel/family" },
-        { icon: FaMoneyBillAlt, text: "Budget Travel", link: "/travel/budget" },
-        { icon: FaCar, text: "Road Trips", link: "/travel/road-trips" },
-        { icon: FaLaptop, text: "Digital Nomad Travel", link: "/travel/digital-nomad" },
-        { icon: FaShip, text: "Cruise Travel", link: "/travel/cruise" },
-        { icon: FaSpa, text: "Wellness Travel", link: "/travel/wellness" },
-        { icon: FaPen, text: "Travel Blogging/Vlogging", link: "/travel/blogging" },
-      ].map(({ icon: Icon, text, link }) => (
+      {travel_nav.map(({ icon: Icon, text, link }) => (
         <li
           key={link}
           className={`
@@ -268,7 +234,7 @@ absolute left-0 mt-3 w-[520px]
   to=""
   // smooth={true}
   // duration={500}
-  className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-gray-700" : "text-gray-100"}`}
+  className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
 >
   Health
 </Link>
@@ -279,7 +245,7 @@ absolute left-0 mt-3 w-[520px]
   {/* Main Title */}
   <Link
     to="/animals"
-    className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-gray-700" : "text-gray-100"}`}
+    className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
   >
     Animals
   </Link>
@@ -307,18 +273,7 @@ absolute left-0 mt-3 w-[520px]
     ></div>
 
     <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
-      {[
-        { icon: FaDog, text: "Dog Training & Care", link: "/animals/dogs" },
-        { icon: FaCat, text: "Cat Behavior & Care", link: "/animals/cats" },
-        { icon: FaFish, text: "Aquarium Fish & Marine Life", link: "/animals/fish" },
-        { icon: FaPaw, text: "Exotic Pets Care", link: "/animals/exotic-pets" },
-        { icon: FaRecycle, text: "Conservation Efforts", link: "/animals/conservation" },
-        { icon: FaLeaf, text: "Endangered Species", link: "/animals/endangered" },
-        { icon: FaFlask, text: "Animal Science & Research", link: "/animals/science" },
-        { icon: FaCamera, text: "Wildlife Photography", link: "/animals/photography" },
-        { icon: FaHandsHelping, text: "Animal Rescue & Adoption", link: "/animals/rescue" },
-        { icon: FaHeartbeat, text: "Animal Health & Nutrition", link: "/animals/health" },
-      ].map(({ icon: Icon, text, link }) => (
+      {animal_nav.map(({ icon: Icon, text, link }) => (
         <li
           key={link}
           className={`

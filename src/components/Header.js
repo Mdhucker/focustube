@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 // import SideBar from './SideBar';
 // import { mindsetItems, technologyItems, travelItems, animalItems } from './Const'; // Import the items from Const.js
-import { mindsetItems, technologyItems,travelItems,   animalItems} from './Const'; // Import the items from Const.js
+import { mindsetItems, technologyItems,travelItems,   animalItems,healthItems} from './Const'; // Import the items from Const.js
 
 function Header({ toggleDarkMode, darkMode }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [open, setOpen] = useState(true);
+  const [open] = useState(true);
   // const [openHealth, setOpenHealth] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false); // ✅ Fix: Add this back
 
@@ -36,7 +36,7 @@ function Header({ toggleDarkMode, darkMode }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const [openHealth, setOpenHealth] = useState(true);
+  const [openHealth] = useState(true);
 
 
 
@@ -74,40 +74,29 @@ function Header({ toggleDarkMode, darkMode }) {
           </Link>
 
           {/* Center: Navigation (Desktop) */}
-          <NavBar />
+          <NavBar  toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>
 
           {/* Right: Dark Mode, Hamburger */}
           <div className="flex items-center space-x-3">
             {/* Dark Mode Toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className={`text-2xl transition-colors ${darkMode ? "text-gray-400" : "text-gray-700"}`}
-            >
-              {darkMode ? "🌙" : "☀️"}
-            </button>
+           
+{/* Dark Mode Toggle */}
+<button
+  onClick={toggleDarkMode}
+  className={`w-8 h-8 flex items-center justify-center text-2xl transition-colors 
+    ${darkMode ? "text-gray-400" : "text-gray-700"}`}
+>
+  <span className="block w-full text-center">{darkMode ? "🌙" : "☀️"}</span>
+</button>
 
-            {/* Search Input (Visible in Desktop and Mobile) */}
-            <div className="relative">
-              <div className="relative hidden md:block w-64">
-                <input
-                  type="text"
-                  placeholder="Search All Topics Related..."
-                  className={`w-full pl-10 pr-4 py-2 rounded-md border text-sm 
-                    ${darkMode ? "bg-white text-gray-700 border-[#555]" : "bg-[#333333] text-gray-100 border-gray-300"} 
-                    focus:outline-none focus:ring-1 focus:ring-[#FF0000] focus:border-transparent transition-all`}
-                />
-              </div>
-            </div>
-
-            {/* Hamburger Icon (Mobile Only) */}
-            <button
-              onClick={handleMenuToggle}
-              className={`text-2xl md:hidden focus:outline-none 
-                ${darkMode ? "text-black" : "text-white"}`}
-            >
-              {menuOpen ? "X" : "☰"}
-            </button>
-
+{/* Hamburger Icon (Mobile Only) */}
+<button
+  onClick={handleMenuToggle}
+  className={`w-8 h-8 flex items-center justify-center text-2xl md:hidden focus:outline-none 
+    ${darkMode ? "text-black" : "text-white"}`}
+>
+  <span className="block w-full text-center">{menuOpen ? "X" : "☰"}</span>
+</button>
 
 
             
@@ -138,6 +127,8 @@ function Header({ toggleDarkMode, darkMode }) {
       )}
 
 {/* Mobile Slide Menu */}
+<nav className="flex flex-col space-y-1 font-semibold text-lg   mt-0">
+
 <div
     className={`fixed top-0 left-0 h-full w-2/3 
       ${darkMode ? "bg-white text-gray-300" : " bg-[#111111] text-gray-700"} 
@@ -165,11 +156,10 @@ function Header({ toggleDarkMode, darkMode }) {
 
 
 
-    <nav className="flex flex-col space-y-1 font-semibold text-lg   mt-12">
-      <hr className="border-t-1 py-0 border-[#FF0000] w-full mt-[-2px]" />
 
-     
-      <div className="overflow-y-auto h-[calc(100vh-80px)]  text-white  py-6 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-black md:hidden">
+    <hr className="border-t-1 py-0 border-[#FF0000] w-full mt-[45px]" />
+
+    <div className="overflow-y-auto h-[calc(100vh-80px)] text-white py-6 pb-20 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-black md:hidden">
 
 
       <div className="md:hidden w-full">
@@ -222,18 +212,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
   {openHealth && (
     <ul className="px-6 py-2 space-y-3 text-sm">
-  {[
-    { text: "Daily Healthy Habits", link: "/health/habits" },
-    { text: "Natural Remedies", link: "/health/remedies" },
-    { text: "Fitness for Beginners", link: "/health/fitness" },
-    { text: "Boosting Immunity", link: "/health/immunity" },
-    { text: "Healthy Diet Plans", link: "/health/diet" },
-    { text: "Mental Health & Self-Care", link: "/health/mental" },
-    { text: "Morning Yoga Routine", link: "/health/yoga" },
-    { text: "Superfoods List", link: "/health/superfoods" },
-    { text: "Detox Naturally", link: "/health/detox" },
-    { text: "Healthy Smoothies", link: "/health/smoothies" },
-  ].map(({ text, link }) => (
+  {healthItems.map(({ text, link }) => (
     <li key={link}>
       <Link
         to={link}
@@ -407,8 +386,8 @@ function Header({ toggleDarkMode, darkMode }) {
     </div>
     </div>
 
-    </nav>
   </div>
+  </nav>
 
 
 
