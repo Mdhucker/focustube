@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -79,15 +79,10 @@ const travelContent = {
   },
 };
 
-export default function TravelPage() {
+export default function TravelPage({ toggleDarkMode, darkMode }) {
   const { section } = useParams();
   const data = travelContent[section];
-const [darkMode, setDarkMode] = useState(false);
 
-  // Toggle function
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
 
   if (!data) {
     return (

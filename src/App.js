@@ -33,13 +33,13 @@ const [darkMode, setDarkMode] = useState(false);
   return (
     <BrowserRouter basename="/focustube">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/health/:section" element={<HealthPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
+      <Route path="/" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+      <Route path="/health/:section" element={<HealthPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
         <Route path="/kids/:section" element={<KidsPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
         <Route path="/mindset/:section" element={<MindsetPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
         <Route path="/tech/:section" element={<TechPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
-        <Route path="/animals/:section" element={<AnimalPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
         <Route path="/travel/:section" element={<TravelPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
+        <Route path="/animals/:section" element={<AnimalPage toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
 
 
 

@@ -124,12 +124,73 @@ const [openHealth, setOpenHealth] = useState(false);
     };
   }, []);
 
+
+  // this code is for the dropdown menu in the navbar. It uses React hooks to manage the state 
+  // of the dropdowns and to handle clicks outside of them to close them. The `useEffect` hooks
+  //  are used to set up and clean up event listeners for clicks outside the dropdowns. The `useRef`
+  //  hooks are used to reference the dropdown elements so that we can check if a click occurred outside of them. 
+
+  useEffect(() => {
+    const body = document.body;
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+  
+    if (
+      openMindset ||
+      openChildren ||
+      openTechnology ||
+      openTravel ||
+      openHealth ||
+      openAnimals
+    ) {
+      body.style.overflow = "hidden";
+  
+      // Prevent layout shift when hiding scrollbar
+      if (scrollBarWidth > 0) {
+        body.style.paddingRight = `${scrollBarWidth}px`;
+      }
+    } else {
+      body.style.overflow = "auto";
+      body.style.paddingRight = ""; // reset
+    }
+  
+    return () => {
+      body.style.overflow = "auto";
+      body.style.paddingRight = "";
+    };
+  }, [
+    openMindset,
+    openChildren,
+    openTechnology,
+    openTravel,
+    openHealth,
+    openAnimals
+  ]);
+  
+
+    
   return (
     <>
-<nav className="hidden md:flex space-x-6 font-semibold absolute left-1/2 transform -translate-x-1/2">
-<div className="relative z-40" ref={dropdownRef}>
+{/* overlay for all dropdowns to close them when clicked outside */}
+{(openMindset || openChildren || openTechnology || openTravel || openHealth || openAnimals) && (
+ <div
+ className="fixed inset-0 z-10 bg-black bg-opacity-50"
+ onClick={() => {
+   setOpenMindset(false);
+   setOpenChildren(false);
+   setOpenTechnology(false);
+   setOpenTravel(false);
+   setOpenHealth(false);
+   setOpenAnimals(false);
+ }}
+></div>
+
+)}
+
+<nav className="hidden md:flex z-30 space-x-6 font-semibold absolute left-1/2 transform -translate-x-1/2">
+<div className="relative " ref={dropdownRef}>
   {/* Clickable Title */}
   <button
+  
     onClick={() => setOpenMindset(!openMindset)}
     className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
   >
@@ -473,7 +534,13 @@ const [openHealth, setOpenHealth] = useState(false);
         </div>
       )}
     </div>
+
+  
+
           </nav>
+
+      
+
     </>
   );
 }

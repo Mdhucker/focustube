@@ -209,12 +209,13 @@ function Header({ toggleDarkMode, darkMode }) {
   </button>
 
   {openDrop && (
-    <ul className="px-6 py-2 space-y-3 text-sm">
+    <ul className="px-6 py-2 space-y-3 text-sm"> 
       {mindsetItems.map(({ icon: Icon, text, link }) => (
         <li key={link} className="flex items-center gap-3">
           <Icon className="w-4 h-4 text-red-500" />
           <Link
             to={link}
+
             className={`block ${
               darkMode ? "text-gray-800" : "text-gray-100"
             } hover:text-red-500`}

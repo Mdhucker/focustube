@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -47,17 +47,12 @@ const techContent = {
   },
 };
 
-export default function TechPage() {
+export default function TechPage({ toggleDarkMode, darkMode }) {
   const { section } = useParams();
   const data = techContent[section];
 
-  const [darkMode, setDarkMode] = useState(false);
   
-    // Toggle function
-    const toggleDarkMode = () => {
-      setDarkMode(!darkMode);
-    };
-  
+   
   if (!data) {
     return (
       <div className="p-6">

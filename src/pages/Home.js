@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 
-function Home() {
+function Home({ toggleDarkMode, darkMode }) {
 
   // // Set the body background color when the theme changes
   // useEffect(() => {
@@ -16,12 +16,6 @@ function Home() {
   //   }
   // }, [darkMode]);
 
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Toggle function
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
 
   return (
     <>

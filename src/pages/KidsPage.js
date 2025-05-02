@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -47,16 +47,16 @@ const kidsContent = {
   },
 };
 
-export default function KidsPage() {
+export default function KidsPage({ toggleDarkMode, darkMode }) {
   const { section } = useParams();
   const data = kidsContent[section];
 
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
   
     // Toggle function
-    const toggleDarkMode = () => {
-      setDarkMode(!darkMode);
-    };
+    // const toggleDarkMode = () => {
+    //   setDarkMode(!darkMode);
+    // };
   
   if (!data) {
     return (

@@ -48,17 +48,42 @@ const animalContent = {
   },
 };
 
-export default function AnimalPage() {
+// export default function AnimalPage() {
+//   const { section } = useParams();
+//   const data = animalContent[section];
+
+//   const [darkMode, setDarkMode] = useState(false);
+  
+//     // Toggle function
+//     const toggleDarkMode = () => {
+//       setDarkMode(!darkMode);
+//     };
+  
+//   if (!data) {
+//     return (
+//       <div className="p-6">
+//         <h1 className="text-2xl font-bold text-red-500">Page not found</h1>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <>
+//     <Header toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>
+//     <div className="p-6">
+//     <h1 className="text-3xl font-bold mb-4">{data.title}</h1>
+//     <p>{data.content}</p>
+//     </div>
+//     <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>
+//     </>
+//   );
+// }
+
+// ✅ Accept props from App
+export default function AnimalPage({ darkMode, toggleDarkMode }) {
   const { section } = useParams();
   const data = animalContent[section];
 
-  const [darkMode, setDarkMode] = useState(false);
-  
-    // Toggle function
-    const toggleDarkMode = () => {
-      setDarkMode(!darkMode);
-    };
-  
   if (!data) {
     return (
       <div className="p-6">
@@ -69,13 +94,12 @@ export default function AnimalPage() {
 
   return (
     <>
-    <Header toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>
-    <div className="p-6">
-    <h1 className="text-3xl font-bold mb-4">{data.title}</h1>
-    <p>{data.content}</p>
-    </div>
-    <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>
+      <Header toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-4">{data.title}</h1>
+        <p>{data.content}</p>
+      </div>
+      <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
     </>
   );
 }
-
