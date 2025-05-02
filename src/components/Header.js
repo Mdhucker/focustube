@@ -139,7 +139,7 @@ function Header({ toggleDarkMode, darkMode }) {
 
       {/* Search Input for Mobile (Below Header) */}
    
-      <div className={`shadow-sm md:flex ${darkMode ? "bg-white" : "bg-[#1a1a1a]"}`}>
+      <div className={`shadow-sm md:flex ${darkMode ? "bg-white" : ""} `}>
   <div className="w-full md:w-[60%] mx-auto my-2">
     <input
       type="text"

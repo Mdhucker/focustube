@@ -201,7 +201,7 @@ const [openHealth, setOpenHealth] = useState(false);
   {openMindset && (
     <div
       className={`
-        absolute left-0 mt-3 w-[520px]
+        absolute left-0 mt-4 w-[550px]
         bg-white border border-gray-200 dark:border-red-600 
         rounded-md shadow-md z-50
         transition-all duration-300 cursor-pointer
@@ -219,7 +219,7 @@ const [openHealth, setOpenHealth] = useState(false);
       ></div>
 
       {/* Items */}
-      <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
+      <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
         {mindset_nav.map(({ icon: Icon, text, link }) => (
           <li
             key={link}
@@ -230,9 +230,9 @@ const [openHealth, setOpenHealth] = useState(false);
             <Icon className="w-5 h-5 text-red-500" />
             <Link
               to={link}
-              onClick={() => setOpenAnimals(false)}  // ✅ THIS IS MISSING IN OTHER PLACES
+              onClick={() => setOpenMindset(false)}  // ✅ THIS IS MISSING IN OTHER PLACES
 
-              className={`block text-gray-800 transition-colors duration-300 ${
+              className={`block text-base text-gray-800 transition-colors duration-300 ${
                 darkMode ? "" : "dark:text-gray-100"
               }`}
             >
@@ -258,7 +258,7 @@ const [openHealth, setOpenHealth] = useState(false);
       {openChildren && (
         <div
           className={`
-            absolute left-0 mt-3 w-[520px]
+            absolute left-0 mt-4 w-[550px]
             bg-white border border-gray-200 dark:border-red-600 
             rounded-md shadow-md z-50
             transition-all duration-300 cursor-pointer
@@ -276,7 +276,7 @@ const [openHealth, setOpenHealth] = useState(false);
           ></div>
 
           {/* Items */}
-          <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
+          <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
             {kids_nav.map(({ icon: Icon, text, link }) => (
               <li
                 key={link}
@@ -289,8 +289,8 @@ const [openHealth, setOpenHealth] = useState(false);
                   to={link}
                   onClick={() => setOpenChildren(false)}  // ✅ closes children dropdown
 
-                  className={`block text-gray-800 transition-colors duration-300 ${
-                    darkMode ? "" : "dark:text-gray-100"
+                  className={`block text-gray-800 text-base transition-colors duration-300 ${
+                    darkMode ? "text-zinc-900" : "dark:text-gray-100"
                   }`}
                 >
                   {text}
@@ -315,7 +315,7 @@ const [openHealth, setOpenHealth] = useState(false);
       {openTechnology && (
         <div
           className={`
-            absolute left-0 mt-3 w-[520px] 
+            absolute left-0 mt-4 w-[570px] 
             bg-white border border-gray-200 
             dark:border-red-600 
             rounded-md shadow-md z-50
@@ -335,7 +335,7 @@ const [openHealth, setOpenHealth] = useState(false);
           ></div>
 
           {/* Items */}
-          <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
+          <ul className="grid grid-cols-2 gap-1 p-6 ml-[12px] text-sm font-medium">
             {technology_nav.map(({ icon: Icon, text, link }) => (
               <li
                 key={link}
@@ -348,7 +348,7 @@ const [openHealth, setOpenHealth] = useState(false);
                   to={link}
                   onClick={() => setOpenTechnology(false)}  // ✅ closes children dropdown
 
-                  className={`block text-gray-800 transition-colors duration-300 ${
+                  className={`block text-gray-800 text-base transition-colors duration-300 ${
                     darkMode ? "" : "dark:text-gray-100"
                   }`}
                 >
@@ -375,7 +375,7 @@ const [openHealth, setOpenHealth] = useState(false);
       {openTravel && (
         <div
           className={`
-            absolute left-0 mt-3 w-[520px] 
+            absolute left-0 mt-4 w-[580px] 
             bg-white border border-gray-200 
             dark:border-red-600 
             rounded-md shadow-md z-50
@@ -395,7 +395,7 @@ const [openHealth, setOpenHealth] = useState(false);
           ></div>
 
           {/* Items */}
-          <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
+          <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
             {travel_nav.map(({ icon: Icon, text, link }) => (
               <li
                 key={link}
@@ -408,7 +408,7 @@ const [openHealth, setOpenHealth] = useState(false);
                   to={link}
                   onClick={() => setOpenTravel(false)}  // ✅ closes children dropdown
 
-                  className={`block text-gray-800 transition-colors duration-300 ${
+                  className={`block text-gray-800 text-base transition-colors duration-300 ${
                     darkMode ? "" : "dark:text-gray-100"
                   }`}
                 >
@@ -436,7 +436,7 @@ const [openHealth, setOpenHealth] = useState(false);
       {openHealth && (
         <div
           className={`
-            absolute left-0 mt-3 w-[520px]
+            absolute left-0 mt-4 w-[520px]
             bg-white border border-gray-200
             dark:border-red-600 
             rounded-md shadow-md z-50
@@ -456,7 +456,7 @@ const [openHealth, setOpenHealth] = useState(false);
           ></div>
 
           {/* List */}
-          <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
+          <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
             {health_nav.map(({ icon: Icon, text, link }) => (
               <li
                 key={link}
@@ -472,7 +472,7 @@ const [openHealth, setOpenHealth] = useState(false);
                   onClick={() => setOpenHealth(false)}  // ✅ closes children dropdown
 
                   className={`
-                    block text-gray-800 transition-colors duration-300
+                    block text-gray-800 text-base transition-colors duration-300
                     ${darkMode ? "" : "dark:text-gray-100"}
                   `}
                 >
@@ -498,7 +498,7 @@ const [openHealth, setOpenHealth] = useState(false);
       {openAnimals && (
         <div
           className={`
-            absolute left-0 mt-3 w-[520px]
+            absolute left-0 mt-4 w-[570px]
             bg-white border border-gray-200
             dark:border-red-600 
             rounded-md shadow-md z-50
@@ -518,7 +518,7 @@ const [openHealth, setOpenHealth] = useState(false);
           ></div>
 
           {/* List */}
-          <ul className="grid grid-cols-2 gap-3 p-6 ml-[12px] text-sm font-medium">
+          <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
             {animal_nav.map(({ icon: Icon, text, link }) => (
               <li
                 key={link}
@@ -534,7 +534,7 @@ const [openHealth, setOpenHealth] = useState(false);
                   onClick={() => setOpenAnimals(false)}  // ✅ closes children dropdown
 
                   className={`
-                    block text-gray-800 transition-colors duration-300
+                    block text-gray-800 text-base transition-colors duration-300
                     ${darkMode ? "" : "dark:text-gray-100"}
                   `}
                 >
