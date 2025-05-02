@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState , useRef} from "react";
 import logob from '../assets/images/logob.avif'; // adjust path as needed
 import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
+import { useLocation } from 'react-router-dom';
+
 // import SideBar from './SideBar';
 // import { mindsetItems, technologyItems, travelItems, animalItems } from './Const'; // Import the items from Const.js
 import { mindsetItems, technology_nav,travel_nav,   animal_nav,health_nav,kids_nav} from './Const'; // Import the items from Const.js
@@ -70,7 +72,8 @@ function Header({ toggleDarkMode, darkMode }) {
   }, [menuOpen]);
   
 
-
+  const [openAnimals, setOpenAnimals] = useState(false);
+  const animalsRef = useRef(null);
   
   return (
     <>
@@ -198,6 +201,7 @@ function Header({ toggleDarkMode, darkMode }) {
     <div className="md:hidden w-full">
   <button
     onClick={() => setOpenDrop(!openDrop)}
+
     className={`w-full text-left flex justify-between items-center py-2 px-4 ${
       darkMode ? "text-gray-900" : "text-gray-100"
     }`}
@@ -215,6 +219,7 @@ function Header({ toggleDarkMode, darkMode }) {
           <Icon className="w-4 h-4 text-red-500" />
           <Link
             to={link}
+            onClick={() => setMenuOpen(false)} // ✅ Close sidebar on link click
 
             className={`block ${
               darkMode ? "text-gray-800" : "text-gray-100"
@@ -251,6 +256,8 @@ function Header({ toggleDarkMode, darkMode }) {
               <Icon className="w-4 h-4 text-red-500" />
               <Link
                 to={link}
+                onClick={() => setMenuOpen(false)} // ✅ Close sidebar on link click
+
                 className={`block ${
                   darkMode ? "text-gray-800" : "text-gray-100"
                 } hover:text-red-500`}
@@ -285,6 +292,8 @@ function Header({ toggleDarkMode, darkMode }) {
               <Icon className="w-4 h-4 text-red-500" />
               <Link
                 to={link}
+                onClick={() => setMenuOpen(false)} // ✅ Close sidebar on link click
+
                 className={`block ${
                   darkMode ? "text-gray-800" : "text-gray-100"
                 } hover:text-red-500`}
@@ -319,6 +328,8 @@ function Header({ toggleDarkMode, darkMode }) {
               <Icon className="w-4 h-4 text-red-500" />
               <Link
                 to={link}
+                onClick={() => setMenuOpen(false)} // ✅ Close sidebar on link click
+
                 className={`block ${
                   darkMode ? "text-gray-800" : "text-gray-100"
                 } hover:text-red-500`}
@@ -353,6 +364,8 @@ function Header({ toggleDarkMode, darkMode }) {
               <Icon className="w-4 h-4 text-red-500" />
               <Link
                 to={link}
+                onClick={() => setMenuOpen(false)} // ✅ Close sidebar on link click
+
                 className={`block ${
                   darkMode ? "text-gray-800" : "text-gray-100"
                 } hover:text-red-500`}
@@ -386,6 +399,8 @@ function Header({ toggleDarkMode, darkMode }) {
               <Icon className="w-4 h-4 text-red-500" />
               <Link
                 to={link}
+                onClick={() => setMenuOpen(false)} // ✅ Close sidebar on link click
+
                 className={`block ${
                   darkMode ? "text-gray-800" : "text-gray-100"
                 } hover:text-red-500`}

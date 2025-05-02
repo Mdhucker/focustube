@@ -165,7 +165,7 @@ const [openHealth, setOpenHealth] = useState(false);
     openHealth,
     openAnimals
   ]);
-  
+
 
     
   return (
@@ -230,6 +230,8 @@ const [openHealth, setOpenHealth] = useState(false);
             <Icon className="w-5 h-5 text-red-500" />
             <Link
               to={link}
+              onClick={() => setOpenAnimals(false)}  // ✅ THIS IS MISSING IN OTHER PLACES
+
               className={`block text-gray-800 transition-colors duration-300 ${
                 darkMode ? "" : "dark:text-gray-100"
               }`}
@@ -285,6 +287,8 @@ const [openHealth, setOpenHealth] = useState(false);
                 <Icon className="w-5 h-5 text-red-500" />
                 <Link
                   to={link}
+                  onClick={() => setOpenChildren(false)}  // ✅ closes children dropdown
+
                   className={`block text-gray-800 transition-colors duration-300 ${
                     darkMode ? "" : "dark:text-gray-100"
                   }`}
@@ -342,6 +346,8 @@ const [openHealth, setOpenHealth] = useState(false);
                 <Icon className="w-5 h-5 text-red-500" />
                 <Link
                   to={link}
+                  onClick={() => setOpenTechnology(false)}  // ✅ closes children dropdown
+
                   className={`block text-gray-800 transition-colors duration-300 ${
                     darkMode ? "" : "dark:text-gray-100"
                   }`}
@@ -400,6 +406,8 @@ const [openHealth, setOpenHealth] = useState(false);
                 <Icon className="w-5 h-5 text-red-500" />
                 <Link
                   to={link}
+                  onClick={() => setOpenTravel(false)}  // ✅ closes children dropdown
+
                   className={`block text-gray-800 transition-colors duration-300 ${
                     darkMode ? "" : "dark:text-gray-100"
                   }`}
@@ -461,6 +469,8 @@ const [openHealth, setOpenHealth] = useState(false);
                 <Icon className="w-5 h-5 text-red-500" />
                 <Link
                   to={link}
+                  onClick={() => setOpenHealth(false)}  // ✅ closes children dropdown
+
                   className={`
                     block text-gray-800 transition-colors duration-300
                     ${darkMode ? "" : "dark:text-gray-100"}
@@ -521,6 +531,8 @@ const [openHealth, setOpenHealth] = useState(false);
                 <Icon className="w-5 h-5 text-red-500" />
                 <Link
                   to={link}
+                  onClick={() => setOpenAnimals(false)}  // ✅ closes children dropdown
+
                   className={`
                     block text-gray-800 transition-colors duration-300
                     ${darkMode ? "" : "dark:text-gray-100"}
