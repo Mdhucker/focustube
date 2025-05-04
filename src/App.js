@@ -6,6 +6,15 @@ import MindsetPage from './pages/MindsetPage';
 import TechPage from './pages/TechPage';
 import TravelPage from './pages/TravelPage';
 import AnimalPage from './pages/AnimalPage';
+import MaulidiApi from './pages/MaulidiApi';  // Adjust the path if necessary
+
+import FetchYouTubeVideos from './components/FetchYouTubeVideos';
+
+
+import AdminVideoPanel from './pages/AdminVideoPanel';
+import Dustbin from './pages/DustbinVideo';
+import CategoryPage from './pages/CategoryPage';
+import TestLinks from './TestLinks';
 
 import React, { useState, useEffect } from 'react';
 
@@ -30,7 +39,20 @@ const [darkMode, setDarkMode] = useState(false);
     setDarkMode(!darkMode);
   };
 
+
+  // Fetch data from the API
+  const [apiData, setApiData] = useState(null);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/test/")
+      .then((res) => res.json())
+      .then((data) => setApiData(data))
+      .catch((err) => console.error("Error fetching data:", err));
+  }, []);
+
+
   return (
+    
     <BrowserRouter basename="/focustube">
       <Routes>
       <Route path="/" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
@@ -40,12 +62,16 @@ const [darkMode, setDarkMode] = useState(false);
         <Route path="/tech/:section" element={<TechPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
         <Route path="/travel/:section" element={<TravelPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
         <Route path="/animals/:section" element={<AnimalPage toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+        <Route path="/maulidi" element={<MaulidiApi toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+        <Route path="admninvidepanel/:section" element={<AdminVideoPanel toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
 
 
+        <Route path="/admin" element={<AdminVideoPanel />} />
+        <Route path="/dustbin" element={<Dustbin />} />
+        <Route path="category/:category" element={<CategoryPage />} />
 
-
-
-
+        {/* <Route path="/" element={<TestLinks />} /> */}
+        <Route path="/fetch-videos" element={<FetchYouTubeVideos />} /> {/* ✅ Correct way */}
       </Routes>
     </BrowserRouter>
   );

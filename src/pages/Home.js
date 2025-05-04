@@ -1,398 +1,132 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 
 function Home({ toggleDarkMode, darkMode }) {
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeVideo, setActiveVideo] = useState(null);
+  const [loadingVideoId, setLoadingVideoId] = useState(null);
+  const [search, setSearch] = useState('');
 
-  // // Set the body background color when the theme changes
-  // useEffect(() => {
-  //   if (darkMode) {
-  //     document.body.style.backgroundColor = '#121212'; // Dark color
-  //     document.body.style.color = '#fff'; // Light text color
-  //   } else {
-  //     document.body.style.backgroundColor = '#fff'; // Light color
-  //     document.body.style.color = '#000'; // Dark text color
-  //   }
-  // }, [darkMode]);
+  const categories = [
+    'Islamic', 'Motivation', 'Success', 'Programming', 'Technology',
+    'Education', 'Health', 'Business', 'Sports', 'Music',
+    'studyingf', 'programmingf', 'quranf', 'Quran'
+  ];
 
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const videoPromises = categories.map((category) =>
+          fetch(`http://127.0.0.1:8000/api/videos/?category=${category}`)
+            .then((res) => res.json())
+            .then((data) => ({ category, videos: data }))
+        );
+        const videoResults = await Promise.all(videoPromises);
+        const allVideos = videoResults.flatMap((result) => result.videos);
+        setVideos(allVideos);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
+
+  const handleThumbnailClick = (videoId) => {
+    setLoadingVideoId(videoId);
+    setActiveVideo(null);
+
+    fetch(`http://127.0.0.1:8000/api/videos/${videoId}/`)
+      .then((res) => res.json())
+      .then((data) => {
+        setActiveVideo(data);
+        setLoadingVideoId(null);
+      })
+      .catch((err) => {
+        console.error('Error fetching video:', err);
+        setLoadingVideoId(null);
+      });
+  };
+
+  const filteredVideos = videos.filter((video) => {
+    return (
+      video.title.toLowerCase().includes(search.toLowerCase()) ||
+      video.assigned_category?.toLowerCase().includes(search.toLowerCase())
+    );
+  });
+
+  if (loading) return <p className="text-center text-white">Loading videos...</p>;
 
   return (
     <>
-
       <Header toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
-      {/* <div class="container mx-auto px-4 sm:px-6 lg:px-8"> */}
+      <div className={`container mx-auto px-4 duration-300 ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
+        <div className="flex flex-1 flex-col items-center p-4">
+          <Link to="/focus" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-4`}>
+            " Why <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>Focus</span>
+            <span className={`${darkMode ? "text-[#FF0000]" : "text-white"}`}>Tube</span> ? "
+          </Link>
 
-      {/* Hero Section */}
-      <div className={`container mx-auto px-4 sm:px-6 lg:px-8 transition-colors duration-300 overflow-x-hidden text-white min-h-screen ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
-        <div className="flex flex-1 flex-col items-center p-6">
-
-
-            <Link to="/focus" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-2`}>
-              " Why <span></span>
-              <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>Focus</span>
-                    <span className={`${darkMode ? "text-[#FF0000]" : "text-white"}`}>Tube</span> ? "
-            </Link>
-            
-         
-         
-         
           {/* Video Grid Section */}
-      <section className="video-grid">
-
-
-
-<div className="video-card relative">
-  <div className="video-wrapper relative">
-    {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2  w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div>  
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-    <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div>
-    
-    <iframe
-      src="https://www.youtube.com/embed/qRAkGuX5v6c?si=h92CfHz0eBccQ95S"
-      title="YouTube video player"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerPolicy="strict-origin-when-cross-origin"
-      allowFullScreen
-      className="w-full h-60"
-    ></iframe>
-  </div>
-
-  <div className="video-title">
-    <h3 className={`text-1xl font-semibold mt-2 
-      sm:text-left 
-      sm:w-auto sm:ml-0 
-      w-screen -ml-[calc((100vw-100%)/2)] px-3 
-      ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-      How to Memorize the Quran Effectively for three months —  
-      Muslim CEO: How My Agency Made Me
-    </h3>
-  </div>
-</div>
-
-
-
-            <div className="video-card">
-
-            <div className="video-wrapper">
-                   {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div> 
-
-              <iframe
-                src="https://www.youtube.com/embed/h8RbDQFw8Dc?si=Nt5MMDBbObiXC7Iv"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="video-title">
-            <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-              </div>
-            </div>
-
-            <div className="video-card">
-
-            <div className="video-wrapper">
-                   {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto "></div> 
-
-              <iframe
-              src="https://www.youtube.com/embed/DbcQypQ1MgQ?si=HbkyLfUCqFobSCzD" 
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="video-title">
-            <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-              </div>
-            </div>
-
-          <div className="video-card">
-
-            <div className="video-wrapper">
-                   {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div> 
-
-              <iframe
-                src="https://www.youtube.com/embed/5UhnQ2h-5BY?si=CKOCarBgQ2XdLrjm"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div> 
-            <div className="video-title">
-               <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-              </div>
-            </div>
-
-            <div className="video-card">
-            <div className="video-wrapper">
-                   {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div> 
-
-              <iframe
-
-              src="https://www.youtube.com/embed/vNmaPWxfYeQ?si=viueP7oUNua82DYJ"                 title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="video-title">
-               <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-              </div>
-            </div>
-
-            
-
-
-           
-
-             <div className="video-card">
-            <div className="video-wrapper">
-                   {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div> 
-
-              <iframe
-src="https://www.youtube.com/embed/MFxIV2np_nA?si=GtvJyuPPn6Cl8sXt"                 title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="video-title">
-                <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-            </div>
-            </div>
-
-            <div className="video-card">
-            <div className="video-wrapper">
-                   {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div> 
-
-              <iframe
-src="https://www.youtube.com/embed/2ywB4uJBPj8?si=D0XBTVdyHBGc4xTB"                 title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="video-title">
-                <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-            </div>
-            </div>
-
-            <div className="video-card">
-            <div className="video-wrapper">
-                   {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div> 
-
-              <iframe
-src="https://www.youtube.com/embed/BRtBdVfJ_SA?si=oY03DED2qlwslu6I"                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="video-title">
-                <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-            </div>
-            </div>
-
-            <div className="video-card">
-            <div className="video-wrapper">
-                {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div> 
-
-
-              <iframe
-src="https://www.youtube.com/embed/bmmQA8A-yUA?si=xpcIA26hJY59IgjG"                 title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="video-title">
-                <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-            </div>
-            </div>
-
-            <div className="video-card">
-            <div className="video-wrapper">
-                   {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div> 
-
-              <iframe
-src="https://www.youtube.com/embed/zk4yefNE5cg?si=PZpZADI41bGwibXQ"                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="video-title">
-                <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-            </div>
-            </div>
-
-            <div className="video-card">
-            <div className="video-wrapper">
-                   {/* Overlay to disable clicks */}
- <div className="absolute bottom-0 right-2 w-48 h-10 z-10 rounded-tl-md pointer-events-auto"></div> 
- <div className="hidden sm:block absolute bottom-11 right-2 w-[660px] h-32 z-10 rounded-tl-md pointer-events-auto"></div>
- <div className="absolute bottom-[340px] right-[180px] w-[460px] h-[330px] z-10 rounded-tl-md pointer-events-auto"></div> 
-   <div className="block lg:hidden absolute bottom-[145px] right-[90px] w-[240px] h-[70px] z-10  rounded-tl-md pointer-events-auto"></div> 
-   <div className="absolute bottom-[46px] right-2 w-48 h-[20px]  rounded-tl-md pointer-events-auto"></div> 
-
-              <iframe
-src="https://www.youtube.com/embed/0O4zLy5nECQ?si=klTJoh4ecYTmBztR"                 title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="video-title">
-                <h3 className={`text-1xl font-semibold mt-2 
-              sm:text-left 
-              sm:w-auto sm:ml-0 
-              w-screen -ml-[calc((100vw-100%)/2)] px-3 
-              ${darkMode ? 'text-gray-900' : 'text-gray-100'}`}>
-              How to Memorize the Quran Effectively for three months —  
-              Muslim CEO: How My Agency Made Me
-            </h3>
-            </div>
-            </div>
-
-          
-      </section>
-
-      
-        </div>
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+          {filteredVideos.map((video) => {
+  const isActive = activeVideo && activeVideo.video_id === video.video_id;
+  return (
+    <div
+      key={video.video_id}
+      className={`rounded shadow w-full overflow-hidden  ${
+        darkMode ? 'bg-gray-100' : 'bg-black'
+      }`}
+    >
+      {/* Video Container */}
+      <div className="relative w-full aspect-video">
+        {isActive ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${video.video_id}?autoplay=1&mute=1`}
+            title={video.title}
+            frameBorder="0"
+            className="absolute top-0 left-0 w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        ) : (
+          <img
+            src={video.thumbnail_url}
+            alt={video.title}
+            className="absolute top-0 left-0 w-full h-full object-cover cursor-pointer"
+            onClick={() => handleThumbnailClick(video.video_id)}
+          />
+        )}
+        {loadingVideoId === video.video_id && (
+          <p className="absolute top-2 left-2 text-white bg-black bg-opacity-60 px-2 py-1 rounded">
+            Loading video...
+          </p>
+        )}
       </div>
 
-    
-      {/* </div> */}
+      {/* Title and Date */}
+      <div className="p-4">
+        <h3 className={`text-lg font-semibold ${darkMode ? 'text-black' : 'text-white'}`}>
+          {video.title}
+        </h3>
+        <p className={`mt-2 text-sm ${darkMode ? 'text-black' : 'text-gray-400'}`}>
+          Published: {video.published_at}
+        </p>
+      </div>
+    </div>
+  );
+})}
 
-
-
-  {/* Footer */}
- <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode}  />
+          </section>
+        </div>
+      </div>
+      <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
     </>
   );
 }
