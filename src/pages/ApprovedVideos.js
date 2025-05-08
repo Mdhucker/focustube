@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 
-function Home({ toggleDarkMode, darkMode }) {
+function ApprovedVideos({ toggleDarkMode, darkMode }) {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeVideo, setActiveVideo] = useState(null);
@@ -11,31 +11,38 @@ function Home({ toggleDarkMode, darkMode }) {
   const [search, setSearch] = useState('');
   const [filteredVideos, setFilteredVideos] = useState([]);
 
-  const isAdmin = true;
-
-  // Categories are for future filtering if needed
   const categories = [
     'Islamic', 'Motivation', 'Success', 'Programming', 'Technology',
     'Education', 'Health', 'Business', 'Sports', 'Music',
     'studying', 'programming', 'quran', 'Quran'
   ];
+  
+
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/approved/');
-        const data = await response.json();
+        const videoPromises = categories.map((category) =>
+          fetch(`http://127.0.0.1:8000/api/approved/`)
+            .then((res) => res.json())
+            .then((data) => ({ category, videos: data }))
+        );
+        
+                    const videoResults = await Promise.all(videoPromises);
+            const allVideos = videoResults.flatMap((result) => result.videos);
 
-        // Remove duplicates by video_id
-        const uniqueVideosMap = new Map();
-        data.forEach((video) => {
-          if (!uniqueVideosMap.has(video.video_id)) {
-            uniqueVideosMap.set(video.video_id, video);
-          }
-        });
+            // ✅ Remove duplicates based on video_id
+            const uniqueVideosMap = new Map();
+            allVideos.forEach((video) => {
+              if (!uniqueVideosMap.has(video.video_id)) {
+                uniqueVideosMap.set(video.video_id, video);
+              }
+            });
+            const uniqueVideos = Array.from(uniqueVideosMap.values());
 
-        const uniqueVideos = Array.from(uniqueVideosMap.values());
-        setVideos(uniqueVideos);
+            setVideos(uniqueVideos);
+
+
         setLoading(false);
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -46,7 +53,27 @@ function Home({ toggleDarkMode, darkMode }) {
     fetchVideos();
   }, []);
 
-  const toText = (value) => (typeof value === 'string' ? value.toLowerCase() : '');
+  
+  
+  
+
+  const handleThumbnailClick = (videoId) => {
+    setLoadingVideoId(videoId);
+    setActiveVideo(null);
+
+    fetch(`http://127.0.0.1:8000/api/videos/${videoId}/`)
+      .then((res) => res.json())
+      .then((data) => {
+        setActiveVideo(data);
+        setLoadingVideoId(null);
+      })
+      .catch((err) => {
+        console.error('Error fetching video:', err);
+        setLoadingVideoId(null);
+      });
+  };
+
+  const toText = (value) => typeof value === 'string' ? value.toLowerCase() : '';
 
   const filterAndSortVideos = (search) => {
     const filtered = videos.filter((video) =>
@@ -68,12 +95,10 @@ function Home({ toggleDarkMode, darkMode }) {
       return score;
     };
 
-    return filtered.sort((a, b) => getMatchScore(b) - getMatchScore(a));
+    return [...filtered].sort((a, b) => getMatchScore(b) - getMatchScore(a));
   };
 
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
-  };
+  const handleSearchChange = (e) => setSearch(e.target.value);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -85,20 +110,52 @@ function Home({ toggleDarkMode, darkMode }) {
     setFilteredVideos(filterAndSortVideos(search));
   }, [videos]);
 
-  const handleThumbnailClick = async (videoId) => {
-    setLoadingVideoId(videoId);
+ 
+
+
+  // const handleApprove = async (video) => {
+  //   try {
+  //     const res = await fetch(`http://127.0.0.1:8000/api/approved/${video.video_id}/approve/`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //     });
+
+  //     if (res.ok) {
+  //       setVideos(prev => prev.filter(v => v.video_id !== video.video_id));
+  //       setFilteredVideos(prev => prev.filter(v => v.video_id !== video.video_id));
+  //     } else {
+  //       console.error('Approval failed');
+  //     }
+  //   } catch (err) {
+  //     console.error('Error approving video:', err);
+  //   }
+  // };
+
+  const handleDeapprove = async (videoId) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/approved/${videoId}/`);
-      const data = await response.json();
-      setActiveVideo(data);
+      const response = await fetch(`http://127.0.0.1:8000/api/deapprove/${videoId}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        alert('Video moved to dustbin!');
+        setVideos((prevVideos) =>
+          prevVideos.filter((video) => video.video_id !== videoId)
+        );
+      } else {
+        const errorData = await response.json();
+        alert('Failed to deapprove: ' + errorData.message);
+        console.error('Failed to deapprove video:', errorData);
+      }
     } catch (error) {
-      console.error('Error loading video:', error);
-    } finally {
-      setLoadingVideoId(null);
+      console.error('Error during deapprove:', error);
     }
   };
+  
 
-  // if (loading) return <p className="text-center text-white">Loading videos...</p>;
 
   return (
     <>
@@ -110,12 +167,12 @@ function Home({ toggleDarkMode, darkMode }) {
         handleKeyDown={handleKeyDown}
       />
 
-      <div className={`min-h-screen w-full px-7 duration-300 ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
+<div className={`min-h-screen w-full px-4 duration-300 ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
         <div className="flex flex-1 flex-col items-center p-4">
-          <Link to="/aboutus" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-4`}>
+          {/* <Link to="/testlink" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-4`}>
             " Why <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>Focus</span>
             <span className={`${darkMode ? "text-[#FF0000]" : "text-white"}`}>Tube</span> ? "
-          </Link>
+          </Link> */}
 
           <section className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
             {filteredVideos.length > 0 ? (
@@ -165,17 +222,28 @@ function Home({ toggleDarkMode, darkMode }) {
                         {video.title}
                       </h3>
                       <p className={`mt-2 text-sm ${darkMode ? 'text-black' : 'text-gray-400'}`}>
-                        Published: {video.published_at}<br />Channel Name:
-                        <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}> {video.channel_title}</span>
+                        Published: {video.published_at}<br/>
+                        Channel Name:
+                        
+
+                      <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>{video.channel_title}</span>
+       
                       </p>
                       <p className="text-xs text-red-300 mt-2">{video.assigned_category}</p>
+
+                      <div className="mt-4">
+                      <button onClick={() => handleDeapprove(video.video_id)} className="bg-red-500 text-white px-2 py-1 rounded">
+                          Deapprove
+                        </button>
+
+                      </div>
                     </div>
                   </div>
                 );
               })
             ) : (
               <p className="text-[#FF0000] text-center col-span-full">
-                Sorry, no videos found for "{search}"
+                Sorry No videos found for "{search}"
               </p>
             )}
           </section>
@@ -187,4 +255,4 @@ function Home({ toggleDarkMode, darkMode }) {
   );
 }
 
-export default Home;
+export default ApprovedVideos;

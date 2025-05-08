@@ -3,12 +3,15 @@ import logob from '../assets/images/logob.avif'; // adjust path as needed
 import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 import { useLocation } from 'react-router-dom';
+import { FiSun, FiMoon } from 'react-icons/fi';
 
 // import SideBar from './SideBar';
 // import { mindsetItems, technologyItems, travelItems, animalItems } from './Const'; // Import the items from Const.js
 import { mindsetItems, technology_nav,travel_nav,   animal_nav,health_nav,kids_nav} from './Const'; // Import the items from Const.js
 
-function Header({ toggleDarkMode, darkMode }) {
+function Header({ toggleDarkMode, darkMode , search, handleSearchChange, filteredVideos,handleKeyDown
+
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [open] = useState(true);
   // const [openHealth, setOpenHealth] = useState(false);
@@ -74,6 +77,8 @@ function Header({ toggleDarkMode, darkMode }) {
 
   const [openAnimals, setOpenAnimals] = useState(false);
   const animalsRef = useRef(null);
+
+  
   
   return (
     <>
@@ -88,6 +93,10 @@ function Header({ toggleDarkMode, darkMode }) {
             ? "bg-[#fcfaf7]"
             : "bg-[#121212]"
         }`}
+
+        search={search}
+        handleSearchChange={handleSearchChange}
+        filteredVideos={filteredVideos}
       >
         <div className="flex items-center justify-between">
           <Link
@@ -115,13 +124,17 @@ function Header({ toggleDarkMode, darkMode }) {
           <div className="flex items-center space-x-3">
             {/* Dark Mode Toggle */}
  {/* Dark Mode Toggle */}
-<button
-  onClick={toggleDarkMode}
-  className={`w-8 h-8 flex items-center justify-center text-2xl transition-colors 
-    ${darkMode ? "text-gray-400" : "text-gray-700"}`}
->
-  <span className="block w-full text-center">{darkMode ? "🌙" : "☀️"}</span>
-</button>
+
+ <button
+      onClick={toggleDarkMode}
+      className={`w-10 h-10 rounded-full flex items-center justify-center 
+        transition-colors duration-300 shadow-md
+        ${darkMode ? "bg-gray-800 text-white-300" : "bg-gray-300 text-gray-800"}`}
+      aria-label="Toggle Dark Mode"
+    >
+      {darkMode ? <FiMoon size={20} /> : <FiSun size={20} />}
+    </button>
+
 
 {/* Hamburger Icon (Mobile Only) */}
 <button
@@ -138,19 +151,25 @@ function Header({ toggleDarkMode, darkMode }) {
         </div>
 
       {/* Search Input for Mobile (Below Header) */}
-   
-      <div className={`shadow-sm md:flex ${darkMode ? "bg-white" : ""} `}>
-  <div className="w-full md:w-[60%] mx-auto my-2">
-    <input
-      type="text"
-      placeholder="Search topics like AI, Travel, Wellness, Pets..."
-      className={`w-full px-4 py-3 pr-28 rounded-md border text-sm outline-none 
- focus:border-red-600
-        ${darkMode ? "bg-white text-gray-700 border-[#555]" : "bg-[#333333] text-gray-100 border-gray-300"}
-      `}
-    />
+
+<div className="p-1">
+  <div className="shadow-sm md:flex">
+    <div className="w-full md:w-[60%] mx-auto my-2">
+      <input
+        type="text"
+        placeholder="Search topics like AI, Travel, Wellness, Pets...     Then press Enter"
+        value={search}
+        onChange={handleSearchChange}
+        onKeyDown={handleKeyDown}  // Add the event listener for Enter key
+        className={`w-full px-4 py-3 pr-28 rounded-md border text-sm outline-none focus:border-red-600 
+          ${darkMode? 'bg-gray-100 text-gray-900 border-gray-500' : '     bg-[#333333] text-white border-gray-300'}`}
+      />
+    </div>
   </div>
+
+  
 </div>
+
 
 
 

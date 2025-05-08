@@ -7,14 +7,18 @@ import TechPage from './pages/TechPage';
 import TravelPage from './pages/TravelPage';
 import AnimalPage from './pages/AnimalPage';
 import MaulidiApi from './pages/MaulidiApi';  // Adjust the path if necessary
+import ApprovedVideos from './pages/ApprovedVideos';
+import DustbinVideos from './pages/DustbinVideos';
+import AboutUs from './pages/AboutUs';
+
 
 import FetchYouTubeVideos from './components/FetchYouTubeVideos';
 
 
 import AdminVideoPanel from './pages/AdminVideoPanel';
-import Dustbin from './pages/DustbinVideo';
+import Dustbin from './pages/DustbinVideos';
 import CategoryPage from './pages/CategoryPage';
-import TestLinks from './TestLinks';
+import TestLinks from './pages/TestLinks';
 
 import React, { useState, useEffect } from 'react';
 
@@ -40,17 +44,28 @@ const [darkMode, setDarkMode] = useState(false);
   };
 
 
-  // Fetch data from the API
-  const [apiData, setApiData] = useState(null);
+  // // Fetch data from the API
+  // const [videos, setVideos] = useState([]);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/test/")
-      .then((res) => res.json())
-      .then((data) => setApiData(data))
-      .catch((err) => console.error("Error fetching data:", err));
-  }, []);
-
-
+  // const [apiData, setApiData] = useState(null);
+  // useEffect(() => {
+  //   const fetchVideos = async () => {
+  //     try {
+  //       const res = await fetch('http://localhost:8000/api/videos/');
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error: ${res.status}`);
+  //       }
+  //       const data = await res.json();
+  //       console.log(data)
+  //       setVideos(data);
+  //     } catch (error) {
+  //       console.error('Failed to fetch videos:', error);
+  //     }
+  //   };
+  
+  //   fetchVideos();
+  // }, []);
+  
   return (
     
     <BrowserRouter basename="/focustube">
@@ -64,14 +79,18 @@ const [darkMode, setDarkMode] = useState(false);
         <Route path="/animals/:section" element={<AnimalPage toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
         <Route path="/maulidi" element={<MaulidiApi toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
         <Route path="admninvidepanel/:section" element={<AdminVideoPanel toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+        <Route path="/approvedvideos" element={<ApprovedVideos  toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
+        {/* <Route path="/dustbinvideos" element={<DustbinVideos toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> */}
 
 
-        <Route path="/admin" element={<AdminVideoPanel />} />
-        <Route path="/dustbin" element={<Dustbin />} />
+        <Route path="/admin" element={<AdminVideoPanel  toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
+        <Route path="/dustbin" element={<Dustbin toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
         <Route path="category/:category" element={<CategoryPage />} />
 
-        {/* <Route path="/" element={<TestLinks />} /> */}
+        <Route path="/testlink" element={<TestLinks toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>}/>
         <Route path="/fetch-videos" element={<FetchYouTubeVideos />} /> {/* ✅ Correct way */}
+        <Route path="/aboutus" element={<AboutUs toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>}/>} /> {/* ✅ Correct way */}
+
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from 'react-router-dom';
 import {mindset_nav,technology_nav,travel_nav,animal_nav,kids_nav,health_nav } from './Const'; // Import the items from Const.js
+import { FaChevronDown } from 'react-icons/fa';  // Import the ChevronDown icon
 
 
 import {
@@ -186,15 +187,35 @@ const [openHealth, setOpenHealth] = useState(false);
 
 )}
 
-<nav className="hidden md:flex z-30 space-x-6 font-semibold absolute left-1/2 transform -translate-x-1/2">
-<div className="relative " ref={dropdownRef}>
+<nav className="hidden md:flex z-30 space-x-4 font-semibold absolute left-1/2 transform -translate-x-1/2">
+
+
+<div className="relative z-40" ref={childrenRef}>
+     
+      {/* Main Title */}
+      <Link to="/" 
+       // onClick={() => setOpenAnimals(!openAnimals)}
+       className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
+       >
+         Home
+      </Link>
+    
+</div>
+
+
+
+
+<div className="relative" ref={dropdownRef}>
   {/* Clickable Title */}
   <button
-  
     onClick={() => setOpenMindset(!openMindset)}
     className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
   >
     Mind-Set
+    {/* Chevron Down icon stays next to the text */}
+    <FaChevronDown
+      className={`ml-1 inline transition-transform duration-300 ${openMindset ? "rotate-180" : "rotate-0"}`}
+    />
   </button>
 
   {/* Dropdown */}
@@ -231,7 +252,6 @@ const [openHealth, setOpenHealth] = useState(false);
             <Link
               to={link}
               onClick={() => setOpenMindset(false)}  // ✅ THIS IS MISSING IN OTHER PLACES
-
               className={`block text-base text-gray-800 transition-colors duration-300 ${
                 darkMode ? "" : "dark:text-gray-100"
               }`}
@@ -245,181 +265,199 @@ const [openHealth, setOpenHealth] = useState(false);
   )}
 </div>
 
+
+
 <div className="relative z-40" ref={childrenRef}>
-      {/* Clickable Title */}
-      <button
-        onClick={() => setOpenChildren(!openChildren)}
-        className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
-      >
-        Children
-      </button>
+  {/* Clickable Title */}
+  <button
+    onClick={() => setOpenChildren(!openChildren)}
+    className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
+  >
+    Children
+    {/* Chevron Down icon next to the text */}
+    <FaChevronDown
+      className={`ml-1 inline transition-transform duration-300 ${openChildren ? "rotate-180" : "rotate-0"}`}
+    />
+  </button>
 
-      {/* Dropdown */}
-      {openChildren && (
-        <div
-          className={`
-            absolute left-0 mt-4 w-[550px]
-            bg-white border border-gray-200 dark:border-red-600 
-            rounded-md shadow-md z-50
-            transition-all duration-300 cursor-pointer
-            ${darkMode ? "bg-gray-100" : "dark:bg-[#1f1f1f]"}
-          `}
-        >
-          {/* Arrow */}
-          <div
-            className={`
-              absolute -top-2 left-6 w-4 h-4
-              bg-white border-l border-t border-gray-200 dark:border-red-600 
-              transform rotate-45 transition-colors duration-300
-              ${darkMode ? "" : "dark:bg-[#1f1f1f]"}
-            `}
-          ></div>
+  {/* Dropdown */}
+  {openChildren && (
+    <div
+      className={`
+        absolute left-0 mt-4 w-[550px]
+        bg-white border border-gray-200 dark:border-red-600 
+        rounded-md shadow-md z-50
+        transition-all duration-300 cursor-pointer
+        ${darkMode ? "bg-gray-100" : "dark:bg-[#1f1f1f]"}
+      `}
+    >
+      {/* Arrow */}
+      <div
+        className={`
+          absolute -top-2 left-6 w-4 h-4
+          bg-white border-l border-t border-gray-200 dark:border-red-600 
+          transform rotate-45 transition-colors duration-300
+          ${darkMode ? "" : "dark:bg-[#1f1f1f]"}
+        `}
+      ></div>
 
-          {/* Items */}
-          <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
-            {kids_nav.map(({ icon: Icon, text, link }) => (
-              <li
-                key={link}
-                className={`flex items-center gap-3 p-2 transition-colors duration-300 ${
-                  darkMode ? "" : "dark:bg-[#1f1f1f]"
-                }`}
-              >
-                <Icon className="w-5 h-5 text-red-500" />
-                <Link
-                  to={link}
-                  onClick={() => setOpenChildren(false)}  // ✅ closes children dropdown
-
-                  className={`block text-gray-800 text-base transition-colors duration-300 ${
-                    darkMode ? "text-zinc-900" : "dark:text-gray-100"
-                  }`}
-                >
-                  {text}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/* Items */}
+      <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
+        {kids_nav.map(({ icon: Icon, text, link }) => (
+          <li
+            key={link}
+            className={`flex items-center gap-3 p-2 transition-colors duration-300 ${
+              darkMode ? "" : "dark:bg-[#1f1f1f]"
+            }`}
+          >
+            <Icon className="w-5 h-5 text-red-500" />
+            <Link
+              to={link}
+              onClick={() => setOpenChildren(false)}  // ✅ closes children dropdown
+              className={`block text-gray-800 text-base transition-colors duration-300 ${
+                darkMode ? "text-zinc-900" : "dark:text-gray-100"
+              }`}
+            >
+              {text}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
+  )}
+</div>
 
-    <div className="relative z-40" ref={techRef}>
-      {/* Title */}
-      <button
-        onClick={() => setOpenTechnology(!openTechnology)}
-        className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
-      >
-        Technology
-      </button>
 
-      {/* Dropdown */}
-      {openTechnology && (
-        <div
-          className={`
-            absolute left-0 mt-4 w-[570px] 
-            bg-white border border-gray-200 
-            dark:border-red-600 
-            rounded-md shadow-md z-50
-            transition-all duration-300 cursor-pointer
-            ${darkMode ? "bg-black" : "dark:bg-[#1f1f1f]"}
-          `}
-        >
-          {/* Arrow */}
-          <div
-            className={`
-              absolute -top-2 left-6 w-4 h-4 
-              bg-white border-l border-t border-gray-200 
-              dark:border-red-600 
-              transform rotate-45
-              ${darkMode ? "" : "dark:bg-[#1f1f1f]"}
-            `}
-          ></div>
 
-          {/* Items */}
-          <ul className="grid grid-cols-2 gap-1 p-6 ml-[12px] text-sm font-medium">
-            {technology_nav.map(({ icon: Icon, text, link }) => (
-              <li
-                key={link}
-                className={`flex items-center gap-3 p-2 transition-colors duration-300 ${
-                  darkMode ? "" : "dark:bg-[#1f1f1f]"
-                }`}
-              >
-                <Icon className="w-5 h-5 text-red-500" />
-                <Link
-                  to={link}
-                  onClick={() => setOpenTechnology(false)}  // ✅ closes children dropdown
 
-                  className={`block text-gray-800 text-base transition-colors duration-300 ${
-                    darkMode ? "" : "dark:text-gray-100"
-                  }`}
-                >
-                  {text}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+<div className="relative z-40" ref={techRef}>
+  {/* Title */}
+  <button
+    onClick={() => setOpenTechnology(!openTechnology)}
+    className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
+  >
+    Technology
+    {/* Chevron Down icon next to the text */}
+    <FaChevronDown
+      className={`ml-1 inline transition-transform duration-300 ${openTechnology ? "rotate-180" : "rotate-0"}`}
+    />
+  </button>
+
+  {/* Dropdown */}
+  {openTechnology && (
+    <div
+      className={`
+        absolute left-0 mt-4 w-[570px] 
+        bg-white border border-gray-200 
+        dark:border-red-600 
+        rounded-md shadow-md z-50
+        transition-all duration-300 cursor-pointer
+        ${darkMode ? "bg-black" : "dark:bg-[#1f1f1f]"}
+      `}
+    >
+      {/* Arrow */}
+      <div
+        className={`
+          absolute -top-2 left-6 w-4 h-4 
+          bg-white border-l border-t border-gray-200 
+          dark:border-red-600 
+          transform rotate-45
+          ${darkMode ? "" : "dark:bg-[#1f1f1f]"}
+        `}
+      ></div>
+
+      {/* Items */}
+      <ul className="grid grid-cols-2 gap-1 p-6 ml-[12px] text-sm font-medium">
+        {technology_nav.map(({ icon: Icon, text, link }) => (
+          <li
+            key={link}
+            className={`flex items-center gap-3 p-2 transition-colors duration-300 ${
+              darkMode ? "" : "dark:bg-[#1f1f1f]"
+            }`}
+          >
+            <Icon className="w-5 h-5 text-red-500" />
+            <Link
+              to={link}
+              onClick={() => setOpenTechnology(false)}  // ✅ closes technology dropdown
+
+              className={`block text-gray-800 text-base transition-colors duration-300 ${
+                darkMode ? "" : "dark:text-gray-100"
+              }`}
+            >
+              {text}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
+  )}
+</div>
 
 
-    <div className="relative z-40" ref={travelRef}>
-      {/* Main Title */}
-      <button
-        onClick={() => setOpenTravel(!openTravel)}
-        className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
-      >
-        Travel
-      </button>
 
-      {/* Dropdown */}
-      {openTravel && (
-        <div
-          className={`
-            absolute left-0 mt-4 w-[580px] 
-            bg-white border border-gray-200 
-            dark:border-red-600 
-            rounded-md shadow-md z-50
-            transition-all duration-300 cursor-pointer
-            ${darkMode ? "bg-gray-100" : "dark:bg-[#1f1f1f]"}
-          `}
-        >
-          {/* Arrow */}
-          <div
-            className={`
-              absolute -top-2 left-6 w-4 h-4 
-              bg-white border-l border-t border-gray-200 
-              dark:border-red-600 
-              transform rotate-45
-              ${darkMode ? "" : "dark:bg-[#1f1f1f]"}
-            `}
-          ></div>
+<div className="relative z-40" ref={travelRef}>
+  {/* Main Title */}
+  <button
+    onClick={() => setOpenTravel(!openTravel)}
+    className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
+  >
+    Travel
+    {/* Chevron Down icon next to the text */}
+    <FaChevronDown
+      className={`ml-1 inline transition-transform duration-300 ${openTravel ? "rotate-180" : "rotate-0"}`}
+    />
+  </button>
 
-          {/* Items */}
-          <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
-            {travel_nav.map(({ icon: Icon, text, link }) => (
-              <li
-                key={link}
-                className={`flex items-center gap-3 p-2 transition-colors duration-300 ${
-                  darkMode ? "" : "dark:bg-[#1f1f1f]"
-                }`}
-              >
-                <Icon className="w-5 h-5 text-red-500" />
-                <Link
-                  to={link}
-                  onClick={() => setOpenTravel(false)}  // ✅ closes children dropdown
+  {/* Dropdown */}
+  {openTravel && (
+    <div
+      className={`
+        absolute left-0 mt-4 w-[580px] 
+        bg-white border border-gray-200 
+        dark:border-red-600 
+        rounded-md shadow-md z-50
+        transition-all duration-300 cursor-pointer
+        ${darkMode ? "bg-gray-100" : "dark:bg-[#1f1f1f]"}
+      `}
+    >
+      {/* Arrow */}
+      <div
+        className={`
+          absolute -top-2 left-6 w-4 h-4 
+          bg-white border-l border-t border-gray-200 
+          dark:border-red-600 
+          transform rotate-45
+          ${darkMode ? "" : "dark:bg-[#1f1f1f]"}
+        `}
+      ></div>
 
-                  className={`block text-gray-800 text-base transition-colors duration-300 ${
-                    darkMode ? "" : "dark:text-gray-100"
-                  }`}
-                >
-                  {text}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/* Items */}
+      <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
+        {travel_nav.map(({ icon: Icon, text, link }) => (
+          <li
+            key={link}
+            className={`flex items-center gap-3 p-2 transition-colors duration-300 ${
+              darkMode ? "" : "dark:bg-[#1f1f1f]"
+            }`}
+          >
+            <Icon className="w-5 h-5 text-red-500" />
+            <Link
+              to={link}
+              onClick={() => setOpenTravel(false)}  // ✅ closes travel dropdown
+
+              className={`block text-gray-800 text-base transition-colors duration-300 ${
+                darkMode ? "" : "dark:text-gray-100"
+              }`}
+            >
+              {text}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
+  )}
+</div>
+
 
 
 
@@ -430,6 +468,10 @@ const [openHealth, setOpenHealth] = useState(false);
         className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
       >
         Health
+         {/* Chevron Down icon stays next to the text */}
+    <FaChevronDown
+      className={`ml-1 inline transition-transform duration-300 ${openHealth ? "rotate-180" : "rotate-0"}`}
+    />
       </button>
 
       {/* Dropdown */}
@@ -492,13 +534,17 @@ const [openHealth, setOpenHealth] = useState(false);
         className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
       >
         Animals
+         {/* Chevron Down icon stays next to the text */}
+    <FaChevronDown
+      className={`ml-1 inline transition-transform duration-300 ${openAnimals ? "rotate-180" : "rotate-0"}`}
+    />
       </button>
 
       {/* Dropdown */}
       {openAnimals && (
         <div
           className={`
-            absolute left-0 mt-4 w-[570px]
+            absolute left-0 mt-4 w-[550px]
             bg-white border border-gray-200
             dark:border-red-600 
             rounded-md shadow-md z-50
@@ -547,9 +593,30 @@ const [openHealth, setOpenHealth] = useState(false);
       )}
     </div>
 
+    
+
+    <div className="relative z-40" ref={animalsRef}>
+      {/* Main Title */}
+      <Link to="/testlink" 
+       // onClick={() => setOpenAnimals(!openAnimals)}
+       className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
+       >
+         Admin
+      </Link>
+       
+    
+
+     
+    </div>
+
+    
   
 
           </nav>
+
+  
+
+          
 
       
 
