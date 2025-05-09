@@ -25,7 +25,7 @@ function AdminVideoPanel({ toggleDarkMode, darkMode }) {
     const fetchVideos = async () => {
       try {
         const videoPromises = categories.map((category) =>
-          fetch(`http://localhost:8000/api/pending-videos/?category=${category}`)
+          fetch(`http://focustube.online/api/pending-videos/?category=${category}`)
             .then((res) => res.json())
             .then((data) => ({ category, videos: data }))
         );

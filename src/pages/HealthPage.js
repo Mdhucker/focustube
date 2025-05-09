@@ -23,7 +23,7 @@ function Home({ toggleDarkMode, darkMode }) {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/approved/');
+        const response = await fetch('http://focustube.online/api/approved/');
         const data = await response.json();
 
         // Remove duplicates by video_id

@@ -61,7 +61,7 @@ function ApprovedVideos({ toggleDarkMode, darkMode }) {
     setLoadingVideoId(videoId);
     setActiveVideo(null);
 
-    fetch(`http://127.0.0.1:8000/api/videos/${videoId}/`)
+    fetch(`http://focustube.online/api/videos/${videoId}/`)
       .then((res) => res.json())
       .then((data) => {
         setActiveVideo(data);
