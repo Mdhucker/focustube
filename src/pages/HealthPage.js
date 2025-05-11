@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import CONFIG from '../config';
+import Loader from '../components/Loader'; // Adjust the import path if necessary
+import { motion } from 'framer-motion';
 
 function Home({ toggleDarkMode, darkMode }) {
   const [videos, setVideos] = useState([]);
@@ -10,6 +13,10 @@ function Home({ toggleDarkMode, darkMode }) {
   const [loadingVideoId, setLoadingVideoId] = useState(null);
   const [search, setSearch] = useState('');
   const [filteredVideos, setFilteredVideos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1); // <-- Track current page
+const [hasMore, setHasMore] = useState(true);
+
 
   const isAdmin = true;
 
@@ -20,31 +27,84 @@ function Home({ toggleDarkMode, darkMode }) {
     'studying', 'programming', 'quran', 'Quran'
   ];
 
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await fetch('http://focustube.online/api/approved/');
-        const data = await response.json();
+  // useEffect(() => {
+  //   const fetchVideos = async () => {
+  //     try {
+  //       const response = await fetch(`${CONFIG.API_BASE_URL}/approved/`);
+  //       const data = await response.json();
 
-        // Remove duplicates by video_id
-        const uniqueVideosMap = new Map();
-        data.forEach((video) => {
-          if (!uniqueVideosMap.has(video.video_id)) {
-            uniqueVideosMap.set(video.video_id, video);
-          }
-        });
+  //       // Remove duplicates by video_id
+  //       const uniqueVideosMap = new Map();
+  //       data.forEach((video) => {
+  //         if (!uniqueVideosMap.has(video.video_id)) {
+  //           uniqueVideosMap.set(video.video_id, video);
+  //         }
+  //       });
 
-        const uniqueVideos = Array.from(uniqueVideosMap.values());
-        setVideos(uniqueVideos);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-        setLoading(false);
-      }
-    };
+  //       const uniqueVideos = Array.from(uniqueVideosMap.values());
+  //       setVideos(uniqueVideos);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching videos:', error);
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchVideos();
-  }, []);
+  //   fetchVideos();
+  // }, []);
+
+
+   useEffect(() => {
+      const fetchVideos = async () => {
+        setLoading(true);
+        try {
+          const response = await fetch(`http://localhost:8000/api/approved/?page=${page}&page_size=20`);
+          const data = await response.json();
+          console.log(data); // should show { count, next, results: [...] }
+    
+          const results = data.results || [];
+    
+          // Remove duplicates based on video_id
+          const uniqueMap = new Map();
+          [...videos, ...results].forEach((video) => {
+            if (!uniqueMap.has(video.video_id)) {
+              uniqueMap.set(video.video_id, video);
+            }
+          });
+    
+          const uniqueVideos = Array.from(uniqueMap.values());
+          setVideos(uniqueVideos); // Append instead of replace
+        } catch (error) {
+          console.error('Error fetching videos:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+    
+      fetchVideos();
+    }, [page]); // <-- run every time 'page' changes
+  
+  
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        if (
+          window.innerHeight + document.documentElement.scrollTop + 30 >=
+          document.documentElement.offsetHeight
+        ) {
+          setPage(prev => prev + 1);
+        }
+      };
+    
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+    
+
+    useEffect(() => {
+      window.scrollTo(0, 0); // Scrolls to top when component mounts
+    }, []);
+    
 
   const toText = (value) => (typeof value === 'string' ? value.toLowerCase() : '');
 
@@ -88,7 +148,7 @@ function Home({ toggleDarkMode, darkMode }) {
   const handleThumbnailClick = async (videoId) => {
     setLoadingVideoId(videoId);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/approved/${videoId}/`);
+      const response = await fetch(`${CONFIG.API_BASE_URL}/approved/${videoId}/`);
       const data = await response.json();
       setActiveVideo(data);
     } catch (error) {
@@ -97,6 +157,20 @@ function Home({ toggleDarkMode, darkMode }) {
       setLoadingVideoId(null);
     }
   };
+  // Simulate video loading
+
+  useEffect(() => {
+    fetch(`${CONFIG.API_BASE_URL}/approved/`)
+      .then((res) => res.json())
+      .then((data) => {
+        setVideos(data);
+        setIsLoading(false); // Hide loader after videos are loaded
+      })
+      .catch((err) => {
+        console.error('Error loading videos:', err);
+        setIsLoading(false); // Hide loader even if there is an error
+      });
+  }, []);
 
   // if (loading) return <p className="text-center text-white">Loading videos...</p>;
 
@@ -116,6 +190,10 @@ function Home({ toggleDarkMode, darkMode }) {
             " Why <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>Focus</span>
             <span className={`${darkMode ? "text-[#FF0000]" : "text-white"}`}>Tube</span> ? "
           </Link>
+          {isLoading ? (
+              <Loader />
+            ) : (
+<div className="w-screen -mx-4 min-h-[600px] sm:w-full sm:mx-0 sm:min-h-0">
 
           <section className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
             {filteredVideos.length > 0 ? (
@@ -139,19 +217,28 @@ function Home({ toggleDarkMode, darkMode }) {
                           allowFullScreen
                         ></iframe>
                       ) : (
+                        <motion.div
+                        initial={{ opacity: 0, y: 50 }}                    // slightly deeper start
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}             // triggers earlier
+                        transition={{ duration: 0.6, ease: 'easeOut'}}    // slower & smoother
+                        className="bg-gray-800 rounded-md p-[0px] shadow-lg"
+  >
                         <img
                           src={video.thumbnail_url}
                           alt={video.title}
                           className="absolute top-0 left-0 w-full h-full object-cover cursor-pointer"
                           onClick={() => handleThumbnailClick(video.video_id)}
+                          loading="lazy"
                         />
+                        </motion.div>
                       )}
 
-                      {loadingVideoId === video.video_id && (
+                      {/* {loadingVideoId === video.video_id && (
                         <p className="absolute top-2 left-2 text-white bg-black bg-opacity-60 px-2 py-1 rounded">
                           Loading video...
                         </p>
-                      )}
+                      )} */}
 
                       {(!video.title || !video.description) && (
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60 text-white text-xl font-semibold">
@@ -175,14 +262,18 @@ function Home({ toggleDarkMode, darkMode }) {
               })
             ) : (
               <p className="text-[#FF0000] text-center col-span-full">
-                Sorry, no videos found for "{search}"
+                {/* Sorry, no videos found for "{search}" */}
               </p>
             )}
           </section>
+          </div>
+
+                )}
+
         </div>
       </div>
 
-      <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+      {/* <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode} /> */}
     </>
   );
 }

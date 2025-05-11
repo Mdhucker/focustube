@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import CONFIG from '../config';
+import Loader from '../components/Loader'; // Adjust the import path if necessary
 
 function TestLinks({ toggleDarkMode, darkMode }) {
   const [channelId, setChannelId] = useState('');
@@ -22,7 +24,7 @@ function TestLinks({ toggleDarkMode, darkMode }) {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/fetch-videos/?channel_id=${channelId.trim()}&max_results=50`
+        `${CONFIG.API_BASE_URL}/fetch-videos/?channel_id=${channelId.trim()}&max_results=50`
       );
 
       if (response.ok) {

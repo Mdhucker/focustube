@@ -164,7 +164,7 @@ const [openHealth, setOpenHealth] = useState(false);
     openTechnology,
     openTravel,
     openHealth,
-    openAnimals
+    openAnimals,
   ]);
 
 
@@ -187,8 +187,12 @@ const [openHealth, setOpenHealth] = useState(false);
 
 )}
 
-<nav className="hidden md:flex z-30 space-x-4 font-semibold absolute left-1/2 transform -translate-x-1/2">
-
+<nav className="
+  hidden           // hidden by default
+  lg:flex          // only show on desktop (≥1024px)
+  z-30 space-x-4 font-semibold 
+  absolute left-1/2 transform -translate-x-1/2
+">
 
 <div className="relative z-40" ref={childrenRef}>
      

@@ -137,9 +137,10 @@ function Header({ toggleDarkMode, darkMode , search, handleSearchChange, filtere
 
 
 {/* Hamburger Icon (Mobile Only) */}
+{/* Hamburger Icon (Mobile & Tablet) */}
 <button
   onClick={handleMenuToggle}
-  className={`w-10 h-10 flex items-center justify-center text-[28px] md:hidden focus:outline-none 
+  className={`w-10 h-10 flex items-center justify-center text-[28px] sm:flex md:flex lg:hidden focus:outline-none 
     ${darkMode ? "text-black" : "text-white"}`}
 >
   <span className="block w-full text-center">{menuOpen ? "X" : "☰"}</span>
@@ -217,10 +218,11 @@ function Header({ toggleDarkMode, darkMode , search, handleSearchChange, filtere
 
     <div className="overflow-y-auto h-[calc(100vh-80px)] text-white py-6 pb-20 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-black md:hidden">
 
-    <div className="md:hidden w-full">
+
+
+<div className="w-full">
   <button
     onClick={() => setOpenDrop(!openDrop)}
-
     className={`w-full text-left flex justify-between items-center py-2 px-4 ${
       darkMode ? "text-gray-900" : "text-gray-100"
     }`}
@@ -239,7 +241,6 @@ function Header({ toggleDarkMode, darkMode , search, handleSearchChange, filtere
           <Link
             to={link}
             onClick={() => setMenuOpen(false)} // ✅ Close sidebar on link click
-
             className={`block ${
               darkMode ? "text-gray-800" : "text-gray-100"
             } hover:text-red-500`}
