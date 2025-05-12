@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import CONFIG from '../config';
-import Loader from '../components/Loader'; // Adjust the import path if necessary
+import Loader from '../components/Loader';
 import { motion } from 'framer-motion';
 
 function DustbinVideos({ toggleDarkMode, darkMode }) {
@@ -14,104 +14,67 @@ function DustbinVideos({ toggleDarkMode, darkMode }) {
   const [loadingVideoId, setLoadingVideoId] = useState(null);
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(1); // <-- Track current page
-const [hasMore, setHasMore] = useState(true);
-  const categories = [
-    'Islamic', 'Motivation', 'Success', 'Programming', 'Technology',
-    'Education', 'Health', 'Business', 'Sports', 'Music',
-    'studying', 'programming', 'quran', 'Quran'
-  ];
+  const [page, setPage] = useState(1);
 
-  // Utility to lowercase safely
-  const toText = (value) => typeof value === 'string' ? value.toLowerCase() : '';
-
-  // useEffect(() => {
-  //   const fetchVideos = async () => {
-  //     try {
-  //       const videoPromises = categories.map((category) =>
-  //         fetch(`${CONFIG.API_BASE_URL}/dustbin/`)
-  //           .then((res) => res.json())
-  //           .then((data) => ({ category, videos: data }))
-  //       );
-
-  //       const videoResults = await Promise.all(videoPromises);
-  //       const allVideos = videoResults.flatMap((result) => result.videos);
-
-  //       // ✅ Remove duplicates based on video_id
-  //       const uniqueVideosMap = new Map();
-  //       allVideos.forEach((video) => {
-  //         if (!uniqueVideosMap.has(video.video_id)) {
-  //           uniqueVideosMap.set(video.video_id, video);
-  //         }
-  //       });
-  //       const uniqueVideos = Array.from(uniqueVideosMap.values());
-
-  //       setVideos(uniqueVideos);
-  //       setFilteredVideos(uniqueVideos);
-
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error('Error fetching videos:', error);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchVideos();
-  // }, []);
-
-
+  const toText = (value) => (typeof value === 'string' ? value.toLowerCase() : '');
   useEffect(() => {
     const fetchVideos = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:8000/api/dustbin/?page=${page}&page_size=20`);
+        const response = await fetch(`${CONFIG.API_BASE_URL}/dustbin/?page=${page}&page_size=20`);
         const data = await response.json();
-        console.log(data); // should show { count, next, results: [...] }
   
-        const results = data.results || [];
+        console.log("API raw response:", data);
   
-        // Remove duplicates based on video_id
+        const results = Array.isArray(data) ? data : [];
+  
+        console.log("Fetched video count:", results.length);
+  
         const uniqueMap = new Map();
         [...videos, ...results].forEach((video) => {
-          if (!uniqueMap.has(video.video_id)) {
+          if (!video.video_id) {
+            console.warn("Missing video_id in:", video);
+          } else if (!uniqueMap.has(video.video_id)) {
             uniqueMap.set(video.video_id, video);
           }
         });
   
         const uniqueVideos = Array.from(uniqueMap.values());
-        setVideos(uniqueVideos); // Append instead of replace
+  
+        console.log("Unique videos stored:", uniqueVideos.length);
+  
+        setVideos(uniqueVideos);
+        setFilteredVideos(uniqueVideos);
+        setLoading(false);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching videos:', error);
-      } finally {
         setLoading(false);
+        setIsLoading(false);
       }
     };
   
     fetchVideos();
-  }, [page]); // <-- run every time 'page' changes
+  }, [page]);
+  
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop + 30 >=
+        document.documentElement.offsetHeight
+      ) {
+        setPage((prev) => prev + 1);
+      }
+    };
 
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    useEffect(() => {
-      const handleScroll = () => {
-        if (
-          window.innerHeight + document.documentElement.scrollTop + 30 >=
-          document.documentElement.offsetHeight
-        ) {
-          setPage(prev => prev + 1);
-        }
-      };
-    
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-    
-
-    useEffect(() => {
-      window.scrollTo(0, 0); // Scrolls to top when component mounts
-    }, []);
-    
-
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleThumbnailClick = (videoId) => {
     setLoadingVideoId(videoId);
@@ -129,7 +92,6 @@ const [hasMore, setHasMore] = useState(true);
       });
   };
 
-  // Scoring and filtering videos based on search
   const filterAndSortVideos = (videoList, searchTerm) => {
     const filtered = videoList.filter((video) =>
       toText(video.title).includes(searchTerm.toLowerCase()) ||
@@ -172,8 +134,8 @@ const [hasMore, setHasMore] = useState(true);
       });
 
       if (res.ok) {
-        setVideos(prev => prev.filter(v => v.video_id !== video.video_id));
-        setFilteredVideos(prev => prev.filter(v => v.video_id !== video.video_id));
+        setVideos((prev) => prev.filter((v) => v.video_id !== video.video_id));
+        setFilteredVideos((prev) => prev.filter((v) => v.video_id !== video.video_id));
       } else {
         console.error('Approval failed');
       }
@@ -181,20 +143,6 @@ const [hasMore, setHasMore] = useState(true);
       console.error('Error approving video:', err);
     }
   };
-  // Simulate video loading
-
-  useEffect(() => {
-    fetch(`${CONFIG.API_BASE_URL}/approved/`)
-      .then((res) => res.json())
-      .then((data) => {
-        setVideos(data);
-        setIsLoading(false); // Hide loader after videos are loaded
-      })
-      .catch((err) => {
-        console.error('Error loading videos:', err);
-        setIsLoading(false); // Hide loader even if there is an error
-      });
-  }, []);
 
   return (
     <>
@@ -205,108 +153,96 @@ const [hasMore, setHasMore] = useState(true);
         handleSearchChange={handleSearchChange}
         handleKeyDown={handleKeyDown}
       />
+
       <div className={`min-h-screen w-full px-4 duration-300 ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
-
         <div className="flex flex-col items-center p-4">
-          {/* <Link to="/testlink" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-4`}>
-            " Why <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>Focus</span>
-            <span className={`${darkMode ? "text-[#FF0000]" : "text-white"}`}>Tube</span> ? "
-          </Link> */}
-  {isLoading ? (
-              <Loader />
-            ) : (
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div className="w-screen -mx-4 min-h-[600px] sm:w-full sm:mx-0 sm:min-h-0">
+              <section className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                {filteredVideos.length > 0 ? (
+                  filteredVideos.map((video) => {
+                    const isActive = activeVideo && activeVideo.video_id === video.video_id;
+                    return (
+                      <div
+                        key={video.video_id}
+                        className={`rounded shadow w-full overflow-hidden ${darkMode ? 'bg-gray-100' : 'bg-black'}`}
+                      >
+                        <div className="relative w-full aspect-video">
+                          {isActive ? (
+                            <iframe
+                              src={`https://www.youtube.com/embed/${video.video_id}?autoplay=1&mute=1`}
+                              title={video.title}
+                              frameBorder="0"
+                              className="absolute top-0 left-0 w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              referrerPolicy="strict-origin-when-cross-origin"
+                              allowFullScreen
+                            ></iframe>
+                          ) : (
+                            <motion.div
+                              initial={{ opacity: 0, y: 50 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              viewport={{ once: true, amount: 0.2 }}
+                              transition={{ duration: 0.6, ease: 'easeOut' }}
+                              className="bg-gray-800 rounded-md p-[0px] shadow-lg"
+                            >
+                              <img
+                                src={video.thumbnail_url}
+                                alt={video.title}
+                                className="absolute top-0 left-0 w-full h-full object-cover cursor-pointer"
+                                onClick={() => handleThumbnailClick(video.video_id)}
+                                loading="lazy"
+                              />
+                            </motion.div>
+                          )}
 
-              <div className="w-screen -mx-4 min-h-[600px] sm:w-full sm:mx-0 sm:min-h-0">
-
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-            {filteredVideos.length > 0 ? (
-              filteredVideos.map((video) => {
-                const isActive = activeVideo && activeVideo.video_id === video.video_id;
-
-                return (
-                  <div
-                    key={video.video_id}
-                    className={`rounded shadow w-full overflow-hidden ${darkMode ? 'bg-gray-100' : 'bg-black'}`}
-                  >
-                    <div className="relative w-full aspect-video">
-                      {isActive ? (
-                        <iframe
-                          src={`https://www.youtube.com/embed/${video.video_id}?autoplay=1&mute=1`}
-                          title={video.title}
-                          frameBorder="0"
-                          className="absolute top-0 left-0 w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          referrerPolicy="strict-origin-when-cross-origin"
-                          allowFullScreen
-                        ></iframe>
-                      ) : (
-                        <motion.div
-                        initial={{ opacity: 0, y: 50 }}                    // slightly deeper start
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.2 }}             // triggers earlier
-                        transition={{ duration: 0.6, ease: 'easeOut'}}    // slower & smoother
-                        className="bg-gray-800 rounded-md p-[0px] shadow-lg"
-  >
-                        <img
-                          src={video.thumbnail_url}
-                          alt={video.title}
-                          className="absolute top-0 left-0 w-full h-full object-cover cursor-pointer"
-                          onClick={() => handleThumbnailClick(video.video_id)}
-                          loading="lazy"
-                        />
-                        </motion.div>
-                      )}
-{/* 
-                      {loadingVideoId === video.video_id && (
-                        <p className="absolute top-2 left-2 text-white bg-black bg-opacity-60 px-2 py-1 rounded">
-                          Loading video...
-                        </p>
-                      )} */}
-
-                      {(!video.title || !video.description) && (
-                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60 text-white text-xl font-semibold">
-                          Sorry No such video
+                          {(!video.title || !video.description) && (
+                            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60 text-white text-xl font-semibold">
+                              Sorry No such video
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
 
-                    <div className="p-4">
-                      <h3 className={`text-lg font-semibold ${darkMode ? 'text-black' : 'text-white'}`}>
-                        {video.title}
-                      </h3>
-                      <p className={`mt-2 text-sm ${darkMode ? 'text-black' : 'text-gray-400'}`}>
-                        Published: {video.published_at}<br/>
-                        Channel Name:
-                        
-
-                      <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>{video.channel_title}</span>
-       
-                      </p>
-                      <div className="mt-4">
-                        <button
-                          onClick={() => handleApprove(video)}
-                          className="bg-green-500 text-white px-2 py-1 rounded"
-                        >
-                          Approve
-                        </button>
+                        <div className="p-4">
+                          <h3 className={`text-lg font-semibold ${darkMode ? 'text-black' : 'text-white'}`}>
+                            {video.title}
+                          </h3>
+                          <p className={`mt-2 text-sm ${darkMode ? 'text-black' : 'text-gray-400'}`}>
+                            Published: {video.published_at}<br />
+                            Channel Name:{' '}
+                            <span className={`${darkMode ? 'text-black' : 'text-[#FF0000]'}`}>
+                              {video.channel_title}
+                            </span>
+                          </p>
+                          <div className="mt-4">
+                            <button
+                              onClick={() => handleApprove(video)}
+                              className="bg-green-500 text-white px-2 py-1 rounded"
+                            >
+                              Approve
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <p className="text-[#FF0000] text-center col-span-full">
-                {/* Sorry No videos found for "{search}" */}
-              </p>
-            )}
-          </section>
-          </div>
-
+                    );
+                  })
+                ) : (
+                  <p className="text-[#FF0000] text-center col-span-full">No videos found</p>
                 )}
+              </section>
+            </div>
+          )}
+          
+          <div className="flex justify-center items-center">
+    <div className="border-t-4 border-b-4 border-blue-500 rounded-full w-9 h-9 animate-spin"></div>
+  </div>
 
         </div>
       </div>
 
+      {/* Optional Footer */}
       {/* <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode} /> */}
     </>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header';
+import Nav_AboutUs from '../components/Nav_AboutUs';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import logob from '../assets/images/logob.avif';
@@ -14,7 +14,7 @@ function AboutUs({ toggleDarkMode, darkMode }) {
 
   return (
     <>
-      <Header toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+      <Nav_AboutUs toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
 
       <div className={`min-h-screen w-full  sm:px-7 duration-300 ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
   <div className="flex flex-1 flex-col items-center p-4">

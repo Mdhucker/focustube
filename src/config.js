@@ -1,12 +1,15 @@
 
+// src/config.js
 
-// // Toggle this manually depending on environment
-// const IS_LOCAL = true; // set to false in production
+// ✅ Define this before using it
+const IS_LOCAL = false; // or false depending on environment
 
-// const CONFIG = {
-//   API_BASE_URL: IS_LOCAL
-//     ? "http://localhost:8000/api"
-//     : "https://api.focustube.online/api",
-// };
+const CONFIG = {
+  API_BASE_URL: IS_LOCAL
+    ? "http://localhost:8000/api"
+    : "https://api.focustube.online/api",
+};
 
-// export default CONFIG;
+export default CONFIG;
+
+

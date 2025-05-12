@@ -24,17 +24,65 @@ const [hasMore, setHasMore] = useState(true);
   ];
   
 
+  // useEffect(() => {
+  //   const fetchVideos = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await fetch(`${CONFIG.API_BASE_URL}/approved/?page=${page}&page_size=20`);
+  //       const data = await response.json();
+  //       console.log(data); // should show { count, next, results: [...] }
+  
+  //       const results = data.results || [];
+  
+  //       // Remove duplicates based on video_id
+  //       const uniqueMap = new Map();
+  //       [...videos, ...results].forEach((video) => {
+  //         if (!uniqueMap.has(video.video_id)) {
+  //           uniqueMap.set(video.video_id, video);
+  //         }
+  //       });
+  
+  //       const uniqueVideos = Array.from(uniqueMap.values());
+  //       setVideos(uniqueVideos); // Append instead of replace
+  //     } catch (error) {
+  //       console.error('Error fetching videos:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  
+  //   fetchVideos();
+  // }, [page]); // <-- run every time 'page' changes
+
+
+  //   useEffect(() => {
+  //     const handleScroll = () => {
+  //       if (
+  //         window.innerHeight + document.documentElement.scrollTop + 30 >=
+  //         document.documentElement.offsetHeight
+  //       ) {
+  //         setPage(prev => prev + 1);
+  //       }
+  //     };
+    
+  //     window.addEventListener('scroll', handleScroll);
+  //     return () => window.removeEventListener('scroll', handleScroll);
+  //   }, []);
+    
+  //   useEffect(() => {
+  //     window.scrollTo(0, 0); // Scrolls to top when component mounts
+  //   }, []);
+    
+
+     
   useEffect(() => {
     const fetchVideos = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:8000/api/approved/?page=${page}&page_size=20`);
+        const response = await fetch(`${CONFIG.API_BASE_URL}/approved/?page=${page}&page_size=20`);
         const data = await response.json();
-        console.log(data); // should show { count, next, results: [...] }
-  
         const results = data.results || [];
   
-        // Remove duplicates based on video_id
         const uniqueMap = new Map();
         [...videos, ...results].forEach((video) => {
           if (!uniqueMap.has(video.video_id)) {
@@ -42,37 +90,38 @@ const [hasMore, setHasMore] = useState(true);
           }
         });
   
-        const uniqueVideos = Array.from(uniqueMap.values());
-        setVideos(uniqueVideos); // Append instead of replace
+        setVideos(Array.from(uniqueMap.values()));
       } catch (error) {
         console.error('Error fetching videos:', error);
       } finally {
         setLoading(false);
+        setIsLoading(false); // ✅ stop global loader
       }
     };
   
     fetchVideos();
-  }, [page]); // <-- run every time 'page' changes
+  }, [page]);
 
-
-    useEffect(() => {
-      const handleScroll = () => {
-        if (
-          window.innerHeight + document.documentElement.scrollTop + 30 >=
-          document.documentElement.offsetHeight
-        ) {
-          setPage(prev => prev + 1);
-        }
-      };
-    
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-    
-    useEffect(() => {
-      window.scrollTo(0, 0); // Scrolls to top when component mounts
-    }, []);
-    
+  
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop + 30 >=
+        document.documentElement.offsetHeight
+      ) {
+        setPage(prev => prev + 1);
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to top when component mounts
+  }, []);
+  
 
   const handleThumbnailClick = (videoId) => {
     setLoadingVideoId(videoId);
@@ -174,18 +223,18 @@ const [hasMore, setHasMore] = useState(true);
   
   // Simulate video loading
 
-  useEffect(() => {
-    fetch(`${CONFIG.API_BASE_URL}/approved/`)
-      .then((res) => res.json())
-      .then((data) => {
-        setVideos(data);
-        setIsLoading(false); // Hide loader after videos are loaded
-      })
-      .catch((err) => {
-        console.error('Error loading videos:', err);
-        setIsLoading(false); // Hide loader even if there is an error
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${CONFIG.API_BASE_URL}/approved/`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setVideos(data);
+  //       setIsLoading(false); // Hide loader after videos are loaded
+  //     })
+  //     .catch((err) => {
+  //       console.error('Error loading videos:', err);
+  //       setIsLoading(false); // Hide loader even if there is an error
+  //     });
+  // }, []);
 
   return (
     <>
@@ -293,6 +342,9 @@ const [hasMore, setHasMore] = useState(true);
           </div>
 
                 )}
+<div className="flex justify-center items-center">
+    <div className="border-t-4 border-b-4 border-blue-500 rounded-full w-9 h-9 animate-spin"></div>
+  </div>
 
         </div>
       </div>

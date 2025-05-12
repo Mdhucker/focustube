@@ -25,37 +25,33 @@ const [hasMore, setHasMore] = useState(true);
     'Education', 'Health', 'Business', 'Sports', 'Music',
     'studying', 'programming', 'quran', 'Quran'
   ];
-
   useEffect(() => {
     const fetchVideos = async () => {
+      setLoading(true);
       try {
-        // const response = await fetch('http://127.0.0.1:8000/api/approved/');
-        const response = await fetch(`${CONFIG.API_BASE_URL}/approved/`);
-
+        const response = await fetch(`${CONFIG.API_BASE_URL}/approved/?page=${page}&page_size=20`);
         const data = await response.json();
-        console.log(data); // check if the data is correct
-
-        // Remove duplicates by video_id
-        const uniqueVideosMap = new Map();
-        data.forEach((video) => {
-          if (!uniqueVideosMap.has(video.video_id)) {
-            uniqueVideosMap.set(video.video_id, video);
+        const results = data.results || [];
+  
+        const uniqueMap = new Map();
+        [...videos, ...results].forEach((video) => {
+          if (!uniqueMap.has(video.video_id)) {
+            uniqueMap.set(video.video_id, video);
           }
         });
-
-        const uniqueVideos = Array.from(uniqueVideosMap.values());
-        setVideos(uniqueVideos);
-        setLoading(false);
+  
+        setVideos(Array.from(uniqueMap.values()));
       } catch (error) {
         console.error('Error fetching videos:', error);
+      } finally {
         setLoading(false);
+        setIsLoading(false); // ✅ stop global loader
       }
     };
-
+  
     fetchVideos();
-  }, []);
-
-
+  }, [page]);
+  
   useEffect(() => {
     window.scrollTo(0, 0); // Scrolls to top when component mounts
   }, []);
@@ -114,18 +110,18 @@ const [hasMore, setHasMore] = useState(true);
 
      // Simulate video loading
 
-  useEffect(() => {
-    fetch(`${CONFIG.API_BASE_URL}/approved/`)
-      .then((res) => res.json())
-      .then((data) => {
-        setVideos(data);
-        setIsLoading(false); // Hide loader after videos are loaded
-      })
-      .catch((err) => {
-        console.error('Error loading videos:', err);
-        setIsLoading(false); // Hide loader even if there is an error
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${CONFIG.API_BASE_URL}/approved/`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setVideos(data);
+  //       setIsLoading(false); // Hide loader after videos are loaded
+  //     })
+  //     .catch((err) => {
+  //       console.error('Error loading videos:', err);
+  //       setIsLoading(false); // Hide loader even if there is an error
+  //     });
+  // }, []);
 
   // if (loading) return <p className="text-center text-white">Loading videos...</p>;
 
@@ -224,6 +220,10 @@ const [hasMore, setHasMore] = useState(true);
           </div>
 
                 )}
+
+<div className="flex justify-center items-center">
+    <div className="border-t-4 border-b-4 border-blue-500 rounded-full w-9 h-9 animate-spin"></div>
+  </div>
 
         </div>
       </div>
