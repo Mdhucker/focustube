@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+  Music,
+  MessageCircleMore
+} from 'lucide-react';
 // import React from 'react';
 // import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
 import logob from '../assets/images/logob.avif'; // adjust path as needed
@@ -67,14 +74,76 @@ function Footer({ toggleDarkMode, darkMode }) {
     </div>
 
     {/* Social Media */}
-    <div>
-      <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
-      <ul className="space-y-2 text-sm text-gray-300 list-disc list-inside">
-        <li><a href="#" className="hover:text-red-500">Facebook</a></li>
-        <li><a href="#" className="hover:text-red-500">Twitter</a></li>
-        <li><a href="#" className="hover:text-red-500">YouTube</a></li>
-      </ul>
-    </div>
+    
+
+<div>
+  <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
+  <ul className="space-y-2 text-sm">
+    <li>
+      <a
+        href="https://www.facebook.com/profile.php?id=100082807225034"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 text-[#1877F2] hover:underline"
+      >
+        <Facebook size={18} color="#1877F2" /> Facebook
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://x.com/maulidimdami"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 text-[#1DA1F2] hover:underline"
+      >
+        <Twitter size={18} color="#1DA1F2" /> Twitter
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://www.instagram.com/mdamimaulidi/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 text-[#E4405F] hover:underline"
+      >
+        <Instagram size={18} color="#E4405F" /> Instagram
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://youtube.com/@maulidimdami"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 text-[#FF0000] hover:underline"
+      >
+        <Youtube size={18} color="#FF0000" /> YouTube
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://www.tiktok.com/@maulidimdami"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 text-[#010101] hover:underline"
+      >
+        <Music size={18} color="#010101" /> TikTok
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://www.threads.net/@maulidimdami"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 text-black hover:underline"
+      >
+        <MessageCircleMore size={18} color="#000000" /> Threads
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+
   </div>
 
   {/* Footer Bottom */}

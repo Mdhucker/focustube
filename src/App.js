@@ -10,6 +10,20 @@ import MaulidiApi from './pages/MaulidiApi';  // Adjust the path if necessary
 import ApprovedVideos from './pages/ApprovedVideos';
 import DustbinVideos from './pages/DustbinVideos';
 import AboutUs from './pages/AboutUs';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Quran from './pages/Quran';
+import Settings from './pages/Settings';
+import MyLearning from './pages/MyLearning';
+import Gift from './pages/Gift';
+import VideoGuide from './pages/VideoGuide';
+import What_Inside from './pages/What_Inside';
+import FAQs from './pages/FAQs';
+import DonatePage from './pages/DonatePage'; // or wherever your file is
+import Contribute from './pages/Contribute'; // or wherever your file is
+
+
+
 
 
 import FetchYouTubeVideos from './components/FetchYouTubeVideos';
@@ -21,6 +35,7 @@ import CategoryPage from './pages/CategoryPage';
 import TestLinks from './pages/TestLinks';
 
 import React, { useState, useEffect } from 'react';
+import MyContacts from './pages/MyContacts';
 
 
 
@@ -44,33 +59,12 @@ const [darkMode, setDarkMode] = useState(false);
   };
 
 
-  // // Fetch data from the API
-  // const [videos, setVideos] = useState([]);
-
-  // const [apiData, setApiData] = useState(null);
-  // useEffect(() => {
-  //   const fetchVideos = async () => {
-  //     try {
-  //       const res = await fetch('http://localhost:8000/api/videos/');
-  //       if (!res.ok) {
-  //         throw new Error(`HTTP error: ${res.status}`);
-  //       }
-  //       const data = await res.json();
-  //       console.log(data)
-  //       setVideos(data);
-  //     } catch (error) {
-  //       console.error('Failed to fetch videos:', error);
-  //     }
-  //   };
-  
-  //   fetchVideos();
-  // }, []);
   
   return (
     
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+      {/* <Route path="/" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} /> */}
       <Route path="/health/:section" element={<HealthPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
         <Route path="/kids/:section" element={<KidsPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
         <Route path="/mindset/:section" element={<MindsetPage toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
@@ -89,7 +83,26 @@ const [darkMode, setDarkMode] = useState(false);
 
         <Route path="/testlink" element={<TestLinks toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>}/>
         <Route path="/fetch-videos" element={<FetchYouTubeVideos />} /> {/* ✅ Correct way */}
-        <Route path="/aboutus" element={<AboutUs toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>}/>} /> {/* ✅ Correct way */}
+        <Route path="/aboutus" element={<AboutUs toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>}/> {/* ✅ Correct way */}
+
+
+        <Route path="/video_input/:id" element={<Home />} />
+        <Route path="/" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+
+        <Route path="/contacts_us" element={<MyContacts toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+        <Route path="/login" element={<Login toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+        <Route path="/registration" element={<Register toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+        <Route path="/quran" element={<Quran toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+        <Route path="/settings" element={<Settings toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+        <Route path="/my-learning" element={<MyLearning toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+        <Route path="/gifts" element={<Gift toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+        <Route path="/vidoeguideline" element={<VideoGuide toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+        <Route path="/what_inside_focustube" element={<What_Inside toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+        <Route path="/faqs" element={<FAQs toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} /> {/* Or Home or any landing component */}
+
+        <Route path="/donate" element={<DonatePage toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+        <Route path="/contribute" element={<Contribute toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+
 
       </Routes>
     </BrowserRouter>

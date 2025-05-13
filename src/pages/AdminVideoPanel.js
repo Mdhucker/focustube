@@ -201,7 +201,7 @@ function AdminVideoPanel({ toggleDarkMode, darkMode }) {
         handleKeyDown={handleKeyDown}
       />
 
-<div className={`min-h-screen w-full px-4 duration-300 ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
+<div className={`min-h-screen w-full px-4 duration-300 ${darkMode ? 'bg-white' : 'dark:bg-[#111]'}`}>
         <div className="flex flex-col items-center p-4">
           {/* <Link to="/testlink" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-4`}>
             " Why <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>Focus</span>
@@ -303,6 +303,14 @@ function AdminVideoPanel({ toggleDarkMode, darkMode }) {
               </p>
             )}
           </section>
+
+          <div className="flex justify-center items-center">
+  <div
+    className={`border-t-4 border-b-4 rounded-full w-10 h-10 animate-spin 
+      ${darkMode ? 'border-red-400' : 'border-red-600'}`}
+  ></div>
+</div>
+          
           </div>
 
                 )}
@@ -311,10 +319,26 @@ function AdminVideoPanel({ toggleDarkMode, darkMode }) {
 
         {/* Notification Button */}
         <button
-        className="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-red-600"
-        onClick={handleBulkApprove}      >
-        Approve All videos
-      </button>
+  className={`fixed bottom-6 right-6 z-50 p-4 rounded-full shadow-lg font-semibold transition duration-300
+    ${darkMode
+      ? 'bg-green-600 text-white hover:bg-green-700'
+      : 'bg-green-400 text-black hover:bg-green-500'}
+  `}
+  onClick={handleBulkApprove}
+>
+  Approve All Videos
+</button>
+
+<button
+  className={`fixed bottom-6 right-[190px] z-50 p-4 rounded-full shadow-lg font-semibold transition duration-300
+    ${darkMode
+      ? 'bg-yellow-600 text-white hover:bg-yellow-500'
+      : 'bg-yellow-400 text-black hover:bg-yellow-400'}
+  `}
+>
+  Approve to Gifts Page
+</button>
+
 
       </div>
       <Footer toggleDarkMode={toggleDarkMode} darkMode={darkMode} />

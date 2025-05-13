@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from 'react-router-dom';
-import {mindset_nav,technology_nav,travel_nav,animal_nav,kids_nav,health_nav } from './Const'; // Import the items from Const.js
+import {mindset_nav,technology_nav,travel_nav,animal_nav,kids_nav,health_nav,more_nav } from './Const'; // Import the items from Const.js
 import { FaChevronDown } from 'react-icons/fa';  // Import the ChevronDown icon
 
 
@@ -29,6 +29,10 @@ const [openHealth, setOpenHealth] = useState(false);
 
   const [openAnimals, setOpenAnimals] = useState(false);
   const animalsRef = useRef(null);
+
+
+const [openMore, setOpenMore] = useState(false);
+  const moreRef = useRef(null);
   
   useEffect(() => {
     function handleClickOutside(event) {
@@ -126,6 +130,21 @@ const [openHealth, setOpenHealth] = useState(false);
   }, []);
 
 
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (moreRef.current && !moreRef.current.contains(event.target)) {
+        setOpenMore(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
   // this code is for the dropdown menu in the navbar. It uses React hooks to manage the state 
   // of the dropdowns and to handle clicks outside of them to close them. The `useEffect` hooks
   //  are used to set up and clean up event listeners for clicks outside the dropdowns. The `useRef`
@@ -141,7 +160,8 @@ const [openHealth, setOpenHealth] = useState(false);
       openTechnology ||
       openTravel ||
       openHealth ||
-      openAnimals
+      openAnimals ||
+      openMore
     ) {
       body.style.overflow = "hidden";
   
@@ -165,6 +185,7 @@ const [openHealth, setOpenHealth] = useState(false);
     openTravel,
     openHealth,
     openAnimals,
+    openMore,
   ]);
 
 
@@ -172,7 +193,7 @@ const [openHealth, setOpenHealth] = useState(false);
   return (
     <>
 {/* overlay for all dropdowns to close them when clicked outside */}
-{(openMindset || openChildren || openTechnology || openTravel || openHealth || openAnimals) && (
+{(openMindset || openChildren || openTechnology || openTravel || openHealth || openAnimals || openMore) && (
  <div
  className="fixed inset-0 z-10 bg-black bg-opacity-50"
  onClick={() => {
@@ -182,6 +203,7 @@ const [openHealth, setOpenHealth] = useState(false);
    setOpenTravel(false);
    setOpenHealth(false);
    setOpenAnimals(false);
+   setOpenMore(false);
  }}
 ></div>
 
@@ -599,19 +621,81 @@ const [openHealth, setOpenHealth] = useState(false);
 
     
 
-    <div className="relative z-40" ref={animalsRef}>
-      {/* Main Title */}
-      <Link to="/testlink" 
-       // onClick={() => setOpenAnimals(!openAnimals)}
-       className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
-       >
-         Admin
-      </Link>
-       
+
+
     
 
-     
+
+    <div className="relative z-40" ref={moreRef}>
+      {/* Main Title */}
+      <button
+        onClick={() => setOpenMore(!openMore)}
+        className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-black" : "text-gray-100"}`}
+      >
+        More
+         {/* Chevron Down icon stays next to the text */}
+    <FaChevronDown
+      className={`ml-1 inline transition-transform duration-300 ${openMore ? "rotate-180" : "rotate-0"}`}
+    />
+      </button>
+
+      {/* Dropdown */}
+      {openMore && (
+        <div
+          className={`
+            absolute left-0 mt-4 w-[450px]
+            bg-white border border-gray-200
+            dark:border-red-600 
+            rounded-md shadow-md z-50
+            transition-all duration-300
+            ${darkMode ? "bg-gray-100" : "dark:bg-[#1f1f1f]"}
+          `}
+        >
+          {/* Arrow pointing to the title */}
+          <div
+            className={`
+              absolute -top-2 left-6 w-4 h-4
+              bg-white border-l border-t border-gray-200
+              dark:border-red-600 
+              transform rotate-45 transition-colors duration-300
+              ${darkMode ? "" : "dark:bg-[#1f1f1f]"}
+            `}
+          ></div>
+
+          {/* List */}
+          <ul className="grid grid-cols-2 gap-2 p-6 ml-[12px] text-sm font-medium">
+            {more_nav.map(({ icon: Icon, text, link }) => (
+              <li
+                key={link}
+                className={`
+                  flex items-center gap-3
+                  p-2 transition-colors duration-300
+                  ${darkMode ? "" : "dark:bg-[#1f1f1f]"}
+                `}
+              >
+                <Icon className="w-5 h-5 text-red-500" />
+                <Link
+                  to={link}
+                  onClick={() => setOpenMore(false)}  // ✅ closes children dropdown
+
+                  className={`
+                    block text-gray-800 text-base transition-colors duration-300
+                    ${darkMode ? "" : "dark:text-gray-100"}
+                  `}
+                >
+                  {text}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
+
+    
+
+
+
 
     
   

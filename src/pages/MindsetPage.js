@@ -236,12 +236,15 @@ const [hasMore, setHasMore] = useState(true);
               </p>
             )}
           </section>
-          </div>
+          <div className="flex justify-center items-center">
+  <div
+    className={`border-t-4 border-b-4 rounded-full w-10 h-10 animate-spin 
+      ${darkMode ? 'border-red-400' : 'border-red-600'}`}
+  ></div>
+</div>
+</div>
 
                 )}
-<div className="flex justify-center items-center">
-    <div className="border-t-4 border-b-4 border-blue-500 rounded-full w-9 h-9 animate-spin"></div>
-  </div>
 
         </div>
       </div>

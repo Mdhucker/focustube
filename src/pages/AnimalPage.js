@@ -135,7 +135,7 @@ const [hasMore, setHasMore] = useState(true);
         handleKeyDown={handleKeyDown}
       />
 
-      <div className={`min-h-screen w-full px-7 duration-300 ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
+      <div className={`min-h-screen w-full px-7 duration-300 ${darkMode ? 'bg-white' : 'dark:bg-[#111]'}`}>
         <div className="flex flex-1 flex-col items-center p-4">
           <Link to="/aboutus" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-4`}>
             " Why <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>Focus</span>
@@ -217,13 +217,17 @@ const [hasMore, setHasMore] = useState(true);
               </p>
             )}
           </section>
+          <div className="flex justify-center items-center">
+  <div
+    className={`border-t-4 border-b-4 rounded-full w-10 h-10 animate-spin 
+      ${darkMode ? 'border-red-400' : 'border-red-600'}`}
+  ></div>
+</div>
           </div>
 
                 )}
 
-<div className="flex justify-center items-center">
-    <div className="border-t-4 border-b-4 border-blue-500 rounded-full w-9 h-9 animate-spin"></div>
-  </div>
+
 
         </div>
       </div>

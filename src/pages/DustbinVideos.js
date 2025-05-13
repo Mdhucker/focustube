@@ -154,7 +154,7 @@ function DustbinVideos({ toggleDarkMode, darkMode }) {
         handleKeyDown={handleKeyDown}
       />
 
-      <div className={`min-h-screen w-full px-4 duration-300 ${darkMode ? 'bg-white' : 'bg-[#111111]'}`}>
+      <div className={`min-h-screen w-full px-4 duration-300 ${darkMode ? 'bg-white' : 'dark:bg-[#111]'}`}>
         <div className="flex flex-col items-center p-4">
           {isLoading ? (
             <Loader />
@@ -232,12 +232,16 @@ function DustbinVideos({ toggleDarkMode, darkMode }) {
                   <p className="text-[#FF0000] text-center col-span-full">No videos found</p>
                 )}
               </section>
-            </div>
+              <div className="flex justify-center items-center">
+  <div
+    className={`border-t-4 border-b-4 rounded-full w-10 h-10 animate-spin 
+      ${darkMode ? 'border-red-400' : 'border-red-600'}`}
+  ></div>
+</div>
+</div>
           )}
           
-          <div className="flex justify-center items-center">
-    <div className="border-t-4 border-b-4 border-blue-500 rounded-full w-9 h-9 animate-spin"></div>
-  </div>
+   
 
         </div>
       </div>

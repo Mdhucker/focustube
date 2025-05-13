@@ -1,4 +1,17 @@
 
+import {
+  FaSignInAlt,
+  FaUserPlus,
+  FaBookOpen,
+  FaGift,
+  FaInfoCircle,
+  FaRegQuestionCircle,
+  FaPhoneAlt,
+  FaQuran,
+  FaVideo,
+  FaCogs,
+  FaDonate
+} from "react-icons/fa";
 
 import {
     Lightbulb, Users, Briefcase, Layers, DollarSign,
@@ -18,6 +31,9 @@ import {
      FaCamera, FaHandsHelping, FaHeartbeat, FaFrog,FaBook, 
      FaHeart, FaSmile,FaAppleAlt,
      FaDumbbell, FaWeight,FaBed,FaStethoscope,FaBrain
+
+
+  
     } from 'react-icons/fa';
 
 
@@ -141,6 +157,26 @@ export const health_nav = [
 
 
 
+// import {
 
+// } from "react-icons/fa";
+export const more_nav = [
+  { icon: FaSignInAlt, text: "Login", link: "/login" },
+  { icon: FaInfoCircle, text: "What inside FocusTube", link: "/what_inside_focustube" },
+  { icon: FaUserPlus, text: "Register", link: "/registration" },
+
+  { icon: FaQuran, text: "Quran Section", link: "/quran" },
+  { icon: FaCogs, text: "Account Settings", link: "/settings" },
+
+  { icon: FaGift, text: "Gifts & Rewards", link: "/gifts" },
+  { icon: FaPhoneAlt, text: "Contacts Us", link: "/contacts_us" },
+
+  { icon: FaHandsHelping, text: "Contribute or Volunteer", link: "/contribute" },
+  { icon: FaBookOpen, text: "My Learning", link: "/my-learning" },
+
+  { icon: FaRegQuestionCircle, text: "FAQs", link: "/faqs" },
+  { icon: FaVideo, text: "Video Guidelines", link: "/vidoeguideline" },
+  { icon: FaDonate, text: "Donate", link: "/donate" }, // 👈 Added donation here
+];
 
 

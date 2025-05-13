@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -83,7 +84,6 @@ function Home({ toggleDarkMode, darkMode  }) {
     window.scrollTo(0, 0); // Scrolls to top when component mounts
   }, []);
   
-  
   const toText = (value) => (typeof value === 'string' ? value.toLowerCase() : '');
 
   const filterAndSortVideos = (search) => {
@@ -136,25 +136,7 @@ function Home({ toggleDarkMode, darkMode  }) {
     }
   };
 
-  
-  // const { id } = useParams();
-  // const [video, setVideo] = useState(null);
 
-  // useEffect(() => {
-  //   async function fetchVideo() {
-  //     const res = await fetch(`${CONFIG.API_BASE_URL}/videos/${id}/`);
-  //     const data = await res.json();
-  //     setVideo(data);
-  //   }
-
-  //   fetchVideo();
-  // }, [id]);
-  // if (loading) return <p className="text-center text-white">Loading videos...</p>;
-  const [scrollY, setScrollY] = useState(0);
-  const [hidden, setHidden] = useState(false);
-
-  
-  
   return (
     <>
       <Header
@@ -163,15 +145,14 @@ function Home({ toggleDarkMode, darkMode  }) {
         search={search}
         handleSearchChange={handleSearchChange}
         handleKeyDown={handleKeyDown}
-        
       />
 
       <div className={`min-h-screen w-full px-7 duration-300 ${darkMode ? 'bg-white' : 'dark:bg-[#111]'}`}>
         <div className="flex flex-1 flex-col items-center p-4">
-          <Link to="/aboutus" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-4`}>
+          {/* <Link to="/aboutus" className={`text-2xl md:text-3xl ${darkMode ? 'text-gray-800' : 'text-gray-100'} mb-4`}>
             " Why <span className={`${darkMode ? "text-black" : "text-[#FF0000]"}`}>Focus</span>
             <span className={`${darkMode ? "text-[#FF0000]" : "text-white"}`}>Tube</span> ? "
-          </Link>
+          </Link> */}
           {isLoading ? (
               <Loader />
             ) : (

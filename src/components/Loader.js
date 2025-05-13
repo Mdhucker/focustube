@@ -17,35 +17,13 @@ const Loader = ({ darkMode }) => {
         </span>
       </div>
 
-      <style jsx>{`
-        .spinner {
-          border-radius: 50%;
-          width: 50px;
-          height: 50px;
-          animation: spin 1s linear infinite;
-          border-width: 4px;
-          border-style: solid;
-        }
+   <div className="flex justify-center items-center">
+  <div
+    className={`border-t-4 border-b-4 rounded-full w-10 h-10 animate-spin 
+      ${darkMode ? 'border-red-400' : 'border-red-600'}`}
+  ></div>
+</div>
 
-        .spinner-light {
-          border: 4px solid #444;
-          border-top: 4px solid #ff0000; /* YouTube Red */
-        }
-
-        .spinner-dark {
-          border: 4px solid #e0e0e0   ;
-          border-top: 4px solid #ff0000;
-        }
-
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-      `}</style>
     </div>
   );
 };

@@ -54,7 +54,7 @@ function TestLinks({ toggleDarkMode, darkMode }) {
         handleKeyDown={() => {}}
       />
 
-      <div className={`min-h-screen w-full px-4 py-8 duration-300 ${darkMode ? 'bg-white text-black' : 'bg-[#111111] text-white'}`}>
+      <div className={`min-h-screen w-full px-4 py-8 duration-300 ${darkMode ? 'bg-white text-black' : 'dark:bg-[#111] text-white'}`}>
         <div className="max-w-4xl mx-auto space-y-8">
           <h1 className="text-3xl font-bold">📺 YouTube Video Admin Tool</h1>
 

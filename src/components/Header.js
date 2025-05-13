@@ -4,12 +4,19 @@ import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 import { useLocation } from 'react-router-dom';
 import { FiSun, FiMoon } from 'react-icons/fi';
+import CONFIG from '../config';
+
+
+
+import { useParams } from 'react-router-dom';
+
+
 // import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { SearchIcon } from '@heroicons/react/solid';
 
 // import SideBar from './SideBar';
 // import { mindsetItems, technologyItems, travelItems, animalItems } from './Const'; // Import the items from Const.js
-import { mindsetItems, technology_nav,travel_nav,   animal_nav,health_nav,kids_nav} from './Const'; // Import the items from Const.js
+import { mindsetItems, technology_nav,travel_nav,   animal_nav,health_nav,kids_nav,more_nav} from './Const'; // Import the items from Const.js
 
 // function Header({ toggleDarkMode, darkMode , search, handleSearchChange, filteredVideos,handleKeyDown
 function Header({ toggleDarkMode, darkMode , handleSearchChange, filteredVideos,handleKeyDown
@@ -21,6 +28,13 @@ function Header({ toggleDarkMode, darkMode , handleSearchChange, filteredVideos,
   const [isScrolled, setIsScrolled] = useState(false); // ✅ Fix: Add this back
   const [openDrop, setOpenDrop] = useState(true);
   const [openMindset, setOpenMindset] = useState(false);
+
+  const [openAnimals, setOpenAnimals] = useState(false);
+  const animalsRef = useRef(null);
+  const [search, setSearch] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
   const cleanText = (text) => {
     return text.replace(/[^a-zA-Z0-9\s]/g, ''); // Remove special characters, keeping alphanumeric and spaces
   };
@@ -83,12 +97,30 @@ function Header({ toggleDarkMode, darkMode , handleSearchChange, filteredVideos,
   }, [menuOpen]);
   
 
-  const [openAnimals, setOpenAnimals] = useState(false);
-  const animalsRef = useRef(null);
-  const [search, setSearch] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
 
+
+
+  const { id } = useParams();
+  const [video, setVideo] = useState(null);
+
+  useEffect(() => {
+    async function fetchVideo() {
+      const res = await fetch(`${CONFIG.API_BASE_URL}/videos/${id}/`);
+      const data = await res.json();
+      setVideo(data);
+    }
+
+    fetchVideo();
+  }, [id]);
+
+
+  const scrollRef = useRef();
+  const [hidden, setHidden] = useState(false);
+
+ 
+
+
+  
   return (
     <>
       {/* Header Section */}
@@ -109,7 +141,7 @@ function Header({ toggleDarkMode, darkMode , handleSearchChange, filteredVideos,
       >
         <div className="flex items-center justify-between">
           <Link
-            to="/"
+            to="/testlink"
             className={`cursor-pointer hover:text-red-600 ${darkMode ? "text-gray-700" : "text-gray-100"}`}
           >
             {/* Left: Logo */}
@@ -180,94 +212,96 @@ function Header({ toggleDarkMode, darkMode , handleSearchChange, filteredVideos,
   
 </div> */}
 
-<div>
-  {/* Toggle Button for Dark/Light Mode */}
 
-  <div className="w-full md:w-[60%] mx-auto my-2 relative">
-    <input
-      type="text"
-      placeholder="Search topics Then press Enter"
-      value={search}
-      onChange={async (e) => {
-        let value = e.target.value;
-        value = cleanText(value); // Clean the input text
+<div className="w-full md:w-[60%] mx-auto my-2 relative">
+      <input
+        type="text"
+        placeholder="Search topics Then press Enter"
+        value={search}
+        onChange={async (e) => {
+          let value = e.target.value;
+          value = cleanText(value); // Clean input
 
-        setSearch(value);
+          setSearch(value);
 
-        if (value.trim().length > 0) {
-          try {
-            const res = await fetch(`http://localhost:8000/api/suggestions?query=${value}`);
-            const data = await res.json();
-            setSuggestions(data);
-            setShowSuggestions(true);
-          } catch (err) {
-            console.error('API error, using mock suggestions:', err);
+          if (value.trim().length > 0) {
+            try {
+              const res = await fetch(`${CONFIG.API_BASE_URL}/suggestions?query=${value}`);
+              const data = await res.json();
+              setSuggestions(data);
+              setShowSuggestions(true);
+            } catch (err) {
+              console.error('API error, using mock suggestions:', err);
 
-            const mockSuggestions = [
-              { title: 'AI in healthcare', description: 'How AI is transforming hospitals' },
-              { title: 'Travel tips for Africa', description: 'Explore on a budget' },
-              // Add more mock suggestions if needed
-            ].filter(item =>
-              item.title.toLowerCase().includes(value.toLowerCase())
-            );
+              const mockSuggestions = [
+                { title: 'AI in healthcare', description: 'How AI is transforming hospitals', id: 1 },
+                { title: 'Travel tips for Africa', description: 'Explore on a budget', id: 2 },
+              ].filter(item =>
+                item.title.toLowerCase().includes(value.toLowerCase())
+              );
 
-            setSuggestions(mockSuggestions);
-            setShowSuggestions(true);
+              setSuggestions(mockSuggestions);
+              setShowSuggestions(true);
+            }
+          } else {
+            setSuggestions([]);
+            setShowSuggestions(false);
           }
-        } else {
-          setSuggestions([]);
-          setShowSuggestions(false);
-        }
 
-        handleSearchChange(e);
-      }}
-      onKeyDown={handleKeyDown}
-      onFocus={() => {
-        if (search.trim().length > 0) setShowSuggestions(true);
-      }}
-      onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-      className={`w-full px-4 py-3 pr-28 text-sm outline-none border rounded-md transition-all duration-150
-        ${showSuggestions ? 'rounded-b-none' : ''}
-        ${darkMode ? 'bg-gray-100 text-gray-900 border-gray-500 focus:border-red-600' : 'bg-[#333333] text-white border-gray-300 focus:border-red-600'}`}
-    />
+          handleSearchChange(e);
+        }}
+        onKeyDown={handleKeyDown}
+        onFocus={() => {
+          if (search.trim().length > 0) setShowSuggestions(true);
+        }}
+        onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+        className={`w-full px-4 py-3 pr-28 text-sm outline-none border rounded-md transition-all duration-150
+          ${showSuggestions ? 'rounded-b-none' : ''}
+          ${darkMode ? 'bg-gray-100 text-gray-900 border-gray-500 focus:border-red-600' : 'bg-[#333333] text-white border-gray-300 focus:border-red-600'}`}
+      />
 
-    {showSuggestions && suggestions.length > 0 && (
-      <ul
-        className={`absolute z-10 w-full border-t-0 rounded-md max-h-100 overflow-y-auto shadow-lg 
-          -mt-1 transition-all duration-150 scrollbar-hide
-          ${darkMode ? 'bg-gray-100 text-black border border-red ' : 'bg-[#333333] text-white border-gray-300'}`}
-      >
-        {suggestions.map((item, index) => (
-          <li
-            key={index}
-            onMouseDown={() => {
-              setSearch(typeof item === 'string' ? item : item.title);
-              setShowSuggestions(false);
-            }}
-            className={`px-4 py-2 cursor-pointer transition-all duration-150 
-              ${darkMode ? 'hover:bg-gray-200' : 'hover:bg-gray-700'}`}
-          >
-            <div className="flex items-center space-x-2">
-              <SearchIcon className={`h-5 w-5 ${darkMode ? 'text-gray-900' : 'text-gray-100'}`} />
-              <div className="font-bold">
-                {typeof item === 'string'
-                  ? item.replace(/[^\p{L}\p{N}\p{P}\p{Z}]/gu, '')
-                  : item.title.replace(/[^\p{L}\p{N}\p{P}\p{Z}]/gu, '')}
+      {showSuggestions && suggestions.length > 0 && (
+        <ul
+          className={`absolute z-10 w-full border-t-0 rounded-md max-h-100 overflow-y-auto shadow-lg 
+            -mt-1 transition-all duration-150 scrollbar-hide
+            ${darkMode ? 'bg-gray-100 text-black border border-red ' : 'bg-[#333333] text-white border-gray-300'}`}
+        >
+          {suggestions.map((item, index) => (
+            <li
+              key={index}
+              onMouseDown={() => {
+                setSearch(typeof item === 'string' ? item : item.title);
+                setShowSuggestions(false);
+              }}
+              className={`px-4 py-2 cursor-pointer transition-all duration-150 
+                ${darkMode ? 'hover:bg-gray-200' : 'hover:bg-gray-700'}`}
+            >
+              <div className="flex items-center space-x-2">
+                <SearchIcon className={`h-5 w-5 ${darkMode ? 'text-gray-900' : 'text-gray-100'}`} />
+                <div className="font-bold">
+                  {typeof item === 'string' ? (
+                    item.replace(/[^\p{L}\p{N}\p{P}\p{Z}]/gu, '')
+                  ) : (
+                    <Link
+                      to={`/video_input/${item.id}`}
+                      onMouseDown={() => setShowSuggestions(false)}
+                      className={`hover:underline ${darkMode ? 'text-black' : 'text-white'}`}
+                      >
+                      {item.title.replace(/[^\p{L}\p{N}\p{P}\p{Z}]/gu, '')}
+                    </Link>
+                  )}
+                </div>
               </div>
-            </div>
-            {typeof item !== 'string' && item.description && (
-              <div className={`text-sm ${darkMode ? 'text-gray-700' : 'text-white'}`}>
-                {/* {item.description.replace(/[^\p{L}\p{N}\p{P}\p{Z}]/gu, '')} */}
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
-</div>
-
-
+              {typeof item !== 'string' && item.description && (
+                <div className={`text-sm ${darkMode ? 'text-gray-700' : 'text-white'}`}>
+                  {/* {item.description.replace(/[^\p{L}\p{N}\p{P}\p{Z}]/gu, '')} */}
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
 
 
 
@@ -530,6 +564,41 @@ function Header({ toggleDarkMode, darkMode , handleSearchChange, filteredVideos,
       )}
     </div>
      
+
+
+    <div className="md:hidden w-full">
+      <button
+        // onClick={() => setOpen(!open)}
+        className={`w-full text-left flex justify-between items-center py-2 px-4 ${
+          darkMode ? "text-gray-900" : "text-gray-100"
+        }`}
+      >
+        <span className={`${darkMode ? "hover:text-red-400" : "hover:text-red-600"}`}>
+          More
+        </span>
+        <span>{open ? "" : "▼"}</span>
+      </button>
+
+      {open && (
+        <ul className="px-6 py-2 space-y-3 text-sm">
+          {more_nav.map(({ icon: Icon, text, link }) => (
+            <li key={link} className="flex items-center gap-3 transition-colors duration-300">
+              <Icon className="w-4 h-4 text-red-500" />
+              <Link
+                to={link}
+                onClick={() => setMenuOpen(false)} // ✅ Close sidebar on link click
+
+                className={`block ${
+                  darkMode ? "text-gray-800" : "text-gray-100"
+                } hover:text-red-500`}
+              >
+                {text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
      
     </div>
 
